@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nguyen Ngoc Duc Phat (KimgionDev) — Unity Gameplay Intern & Software Engineering Student Portfolio. Hands-on with 2D gameplay systems, UI state flow, Utility AI, and procedural generation.">
+    <meta name="keywords" content="Unity, Game Development, Gameplay Programmer, Intern, C#, Portfolio, Can Tho University, KimgionDev">
+    <meta name="author" content="Nguyen Ngoc Duc Phat">
+    <title>NGUYEN NGOC DUC PHAT | KimgionDev — Unity Gameplay Intern Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Press Start 2P (Pixel Headings), VT323 (Pixel UI), JetBrains Mono (Code/Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: '#090a0f',
+                        bgPanel: '#12141f',
+                        bgCard: '#181b28',
+                        pixelOrange: '#ff6b35',
+                        pixelAmber: '#ffb703',
+                        pixelCyan: '#00f5d4',
+                        pixelGreen: '#38b000',
+                        pixelPurple: '#9b5de5',
+                        borderPixel: '#2c3147'
+                    },
+                    fontFamily: {
+                        pixel: ['"Press Start 2P"', 'monospace'],
+                        retro: ['"VT323"', 'monospace'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            background-color: #090a0f;
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(rgba(255, 107, 53, 0.06) 1px, transparent 1px),
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 24px 24px, 48px 48px, 48px 48px;
+        }
+
+        /* Subtle CRT Scanline Overlay */
+        .crt-overlay {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.18) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 90;
+            opacity: 0.45;
+        }
+
+        /* Retro 8-Bit Box Shadow Border */
+        .pixel-box {
+            background: #12141f;
+            border: 2px solid #2e344e;
+            box-shadow: 
+                4px 4px 0px #000000,
+                inset 1px 1px 0px rgba(255,255,255,0.06);
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .pixel-box:hover {
+            border-color: #ff6b35;
+            box-shadow: 
+                6px 6px 0px #ff6b35,
+                inset 1px 1px 0px rgba(255,107,53,0.2);
+            transform: translate(-2px, -2px);
+        }
+
+        /* Retro Menu Button (Like Video 2) */
+        .pixel-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            background: #181b28;
+            border: 2px solid #e2e8f0;
+            box-shadow: 4px 4px 0px #000000;
+            transition: all 0.12s ease;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .pixel-btn:hover {
+            background: #ff6b35;
+            color: #090a0f;
+            border-color: #ffffff;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000000;
+        }
+        .pixel-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .pixel-btn-primary {
+            background: #ff6b35;
+            color: #090a0f;
+            border-color: #ffb703;
+            box-shadow: 4px 4px 0px #000000;
+        }
+        .pixel-btn-primary:hover {
+            background: #ffb703;
+            color: #090a0f;
+            border-color: #ffffff;
+            box-shadow: 6px 6px 0px #ff6b35;
+        }
+
+        /* Skill Pill from Video 2 */
+        .skill-pill {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            background: #161925;
+            border: 1px solid #2e344e;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s ease;
+            box-shadow: 3px 3px 0px #050608;
+        }
+        .skill-pill:hover {
+            border-color: #00f5d4;
+            color: #00f5d4;
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px rgba(0, 245, 212, 0.25);
+        }
+
+        /* Tool Card with Diagonal Corner Cut like Video 2 */
+        .tool-card {
+            background: #141724;
+            border: 2px solid #2a3047;
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .tool-card:hover {
+            border-color: #ff6b35;
+            transform: translateY(-4px);
+            background: #1b1f30;
+        }
+
+        /* Blinking cursor */
+        .blink {
+            animation: blinkAnim 1s steps(2, start) infinite;
+        }
+        @keyframes blinkAnim {
+            to { visibility: hidden; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2e344e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6b35;
+        }
+
+        /* Portfolio refresh: quieter presentation, clearer project content */
+        .crt-overlay { display: none !important; }
+        body { background-image: radial-gradient(rgba(255,107,53,.035) 1px, transparent 1px); background-size: 28px 28px; }
+        .pixel-box { border-radius: 0.75rem !important; box-shadow: 3px 3px 0 #000; }
+        .pixel-box:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 #ff6b35; }
+        .pixel-btn { font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .02em; }
+        .skill-pill { font-family: 'JetBrains Mono', monospace; font-size: .72rem; border-radius: 9999px; box-shadow: none; }
+        .skill-pill:hover { transform: none; }
+        header { border-bottom-width: 1px !important; }
+
+        /* Crisp Rendering for Pixel Art Canvases */
+        canvas {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        /* High Quality Print Styles for Resume / CV */
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #cvModal, #cvModal * {
+                visibility: visible !important;
+            }
+            #cvModal {
+                position: absolute !important;
+                inset: 0 !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                z-index: 99999 !important;
+                display: block !important;
+            }
+            #cvModal .pixel-box {
+                border: none !important;
+                box-shadow: none !important;
+                background: #ffffff !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            #cvModal button, #cvModal a.pixel-btn {
+                display: none !important;
+            }
+            #cvModal .bg-bgDark, #cvModal .bg-bgPanel {
+                background: #ffffff !important;
+                color: #111827 !important;
+                border-color: #cbd5e1 !important;
+            }
+            #cvModal .text-white, #cvModal .text-slate-300, #cvModal .text-slate-200, #cvModal .text-slate-400 {
+                color: #1e293b !important;
+            }
+            #cvModal .text-pixelOrange, #cvModal .text-pixelAmber, #cvModal .text-pixelCyan, #cvModal .text-pixelGreen, #cvModal .text-pixelPurple {
+                color: #0f172a !important;
+                font-weight: bold !important;
+            }
+            #cvModal a {
+                color: #2563eb !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-pixelOrange selection:text-bgDark">
+
+    <!-- Subtle Retro Scanline Overlay -->
+    <div class="crt-overlay" id="crtOverlay"></div>
+
+    <!-- Top Quick Contact Bar (Video 1 Tip: Clear Contact Info on Homepage) -->
+    <div class="bg-[#0e1018] border-b border-borderPixel text-xs py-2 px-4">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex flex-wrap items-center gap-4 text-slate-300">
+                <span class="inline-flex items-center gap-1.5 text-pixelCyan font-medium">
+                    <span class="w-2 h-2 rounded-full bg-pixelGreen animate-ping"></span>
+                    STATUS: SEEKING UNITY GAMEPLAY INTERNSHIP
+                </span>
+                <span class="hidden sm:inline text-slate-600">|</span>
+                <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-location-dot text-pixelOrange"></i> Can Tho, Vietnam
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="copyContact('phatbo13579@gmail.com', 'Email')" class="hover:text-pixelOrange transition flex items-center gap-1.5" title="Click to copy email">
+                    <i class="fa-solid fa-envelope text-pixelOrange"></i>
+                    <span>phatbo13579@gmail.com</span>
+                </button>
+                <span class="text-slate-600">|</span>
+                <button onclick="copyContact('0836663188', 'Phone Number')" class="hover:text-pixelCyan transition flex items-center gap-1.5" title="Click to copy phone">
+                    <i class="fa-solid fa-phone text-pixelCyan"></i>
+                    <span>0836663188</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Retro Arcade Navbar (Inspired by Video 2) -->
+    <header class="sticky top-0 z-50 bg-bgDark/90 backdrop-blur-md border-b-2 border-borderPixel">
+        <nav class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" onmouseenter="playSound('hover')" onclick="playSound('click')" class="font-pixel text-sm sm:text-base text-white tracking-wider flex items-center gap-2 hover:text-pixelOrange transition">
+                <span class="text-pixelOrange">&gt;</span>KIMGIONDEV<span class="blink text-pixelCyan">_</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="hidden lg:flex items-center gap-6 font-pixel text-[10px] tracking-wider text-slate-300">
+                <a href="#projects" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">PROJECTS</a>
+                <a href="#about" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">ABOUT ME</a>
+                <a href="#skills" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">SKILLS</a>
+                <a href="#experience" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">EXPERIENCE</a>
+                <a href="#contact" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">CONTACT</a>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-2.5">
+                <!-- 8-bit Sound Toggle -->
+                <button id="sfxToggleBtn" onclick="toggleSFX()" class="px-2.5 py-2 rounded bg-bgPanel border border-borderPixel text-xs font-mono text-pixelCyan hover:border-pixelCyan transition flex items-center gap-1.5" title="Toggle 8-Bit Arcade Sound Effects">
+                    <i id="sfxIcon" class="fa-solid fa-volume-high"></i>
+                    <span id="sfxLabel" class="hidden sm:inline text-[11px]">SFX: ON</span>
+                </button>
+
+                <!-- Guide Button for GitHub.io setup -->
+                <button onclick="openGuideModal()" onmouseenter="playSound('hover')" class="px-2.5 py-2 rounded bg-bgPanel border border-borderPixel text-xs font-mono text-pixelAmber hover:border-pixelAmber transition flex items-center gap-1.5" title="How to upload to GitHub.io">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span class="hidden md:inline text-[11px]">GITHUB.IO GUIDE</span>
+                </button>
+
+                <!-- Mobile Hamburger Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded bg-bgPanel border border-borderPixel text-xs font-mono text-slate-300 hover:text-pixelOrange hover:border-pixelOrange transition flex items-center justify-center w-8 h-8" aria-label="Toggle navigation menu" title="Menu">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-borderPixel bg-bgDark/98 px-5 py-4 space-y-3 font-pixel text-[10px] tracking-wider text-slate-300">
+            <a href="#projects" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>PROJECTS</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>ABOUT ME</a>
+            <a href="#skills" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>SKILLS</a>
+            <a href="#experience" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>EXPERIENCE</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>CONTACT</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-24 py-10">
+
+        <!-- ================= HERO SECTION ================= -->
+        <section class="relative pt-4 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Column: Intro & CTAs (Like Video 2 Layout) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-bgPanel border border-pixelOrange/50 text-pixelOrange text-xs font-mono">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>4TH-YEAR SE STUDENT @ CAN THO UNIVERSITY | GPA 3.56/4.0</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <p class="font-pixel text-sm sm:text-base text-slate-300 tracking-wide">
+                            HI, I'M
+                        </p>
+                        <h1 class="font-pixel text-xl sm:text-3xl text-white leading-relaxed">
+                            NGUYEN NGOC DUC PHAT
+                        </h1>
+                        <div class="inline-block bg-gradient-to-r from-pixelOrange via-pixelAmber to-pixelCyan bg-clip-text text-transparent font-pixel text-base sm:text-2xl py-1 leading-snug">
+                            UNITY GAMEPLAY INTERN // SE STUDENT
+                        </div>
+                    </div>
+
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+                        Software Engineering student at Can Tho University with experience in <span class="text-white font-semibold">2D game development using Unity and C#</span>. Hands-on with <span class="text-pixelCyan font-semibold">gameplay systems</span>, <span class="text-pixelAmber">UI state flow</span>, <span class="text-pixelAmber">Utility AI</span>, <span class="text-pixelAmber">Procedural Generation (BSP)</span>, and <span class="text-pixelAmber">ScriptableObject-based data design</span> through academic and personal projects.
+                    </p>
+
+                    <!-- Direct Contact Bar inside Hero (Video 1 Tip) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+                        <button onclick="copyContact('phatbo13579@gmail.com', 'Email')" class="flex items-center gap-2.5 p-2.5 rounded bg-bgPanel/90 border border-borderPixel hover:border-pixelOrange text-left transition group">
+                            <span class="w-8 h-8 rounded bg-pixelOrange/15 text-pixelOrange flex items-center justify-center group-hover:bg-pixelOrange group-hover:text-bgDark transition">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <div class="overflow-hidden">
+                                <div class="text-[10px] text-slate-400">EMAIL (CLICK TO COPY)</div>
+                                <div class="font-semibold text-white truncate">phatbo13579@gmail.com</div>
+                            </div>
+                        </button>
+
+                        <button onclick="copyContact('0836663188', 'Phone')" class="flex items-center gap-2.5 p-2.5 rounded bg-bgPanel/90 border border-borderPixel hover:border-pixelCyan text-left transition group">
+                            <span class="w-8 h-8 rounded bg-pixelCyan/15 text-pixelCyan flex items-center justify-center group-hover:bg-pixelCyan group-hover:text-bgDark transition">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <div>
+                                <div class="text-[10px] text-slate-400">PHONE / ZALO</div>
+                                <div class="font-semibold text-white">0836663188</div>
+                            </div>
+                        </button>
+
+                        <a href="https://github.com/KimgionDev" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 p-2.5 rounded bg-bgPanel/90 border border-borderPixel hover:border-pixelAmber text-left transition group">
+                            <span class="w-8 h-8 rounded bg-pixelAmber/15 text-pixelAmber flex items-center justify-center group-hover:bg-pixelAmber group-hover:text-bgDark transition">
+                                <i class="fa-brands fa-github text-base"></i>
+                            </span>
+                            <div>
+                                <div class="text-[10px] text-slate-400">GITHUB PROFILE</div>
+                                <div class="font-semibold text-white">@KimgionDev</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Primary Hero Buttons -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#projects" onmouseenter="playSound('hover')" onclick="playSound('click')" class="pixel-btn pixel-btn-primary px-5 py-3.5 rounded">
+                            <i class="fa-solid fa-play"></i>
+                            <span>VIEW PROJECTS</span>
+                        </a>
+                        <a href="#contact" onmouseenter="playSound('hover')" onclick="playSound('click')" class="pixel-btn px-5 py-3.5 rounded text-white">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>CONTACT ME</span>
+                        </a>
+                        <button onclick="openCVModal()" onmouseenter="playSound('hover')" class="pixel-btn px-4 py-3.5 rounded text-pixelCyan border-pixelCyan">
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>VIEW RESUME</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Pixel Avatar + Mini Gameplay Sandbox -->
+                <div class="lg:col-span-5">
+                    <div class="pixel-box rounded-xl p-5 relative overflow-hidden">
+                        <!-- Top Window Bar -->
+                        <div class="flex items-center justify-between pb-3 mb-4 border-b border-borderPixel">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                                <span class="font-pixel text-[10px] text-slate-400 ml-2">STUDENT_PROFILE.INFO</span>
+                            </div>
+                            <span class="text-[11px] font-mono text-pixelCyan">CTU 2023–2027</span>
+                        </div>
+
+                        <!-- Avatar & Factual Student Info Sheet -->
+                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                            <!-- Custom SVG 8-Bit Game Dev Avatar -->
+                            <div class="sm:col-span-5 flex flex-col items-center">
+                                <div class="w-36 h-36 rounded-xl bg-[#0b0d14] border-2 border-pixelOrange p-2 relative group cursor-pointer" onclick="triggerAvatarJump()" title="Click Avatar">
+                                    <!-- SVG Pixel Character -->
+                                    <svg id="pixelAvatarSvg" viewBox="0 0 32 32" class="w-full h-full transition-transform duration-200" shape-rendering="crispEdges">
+                                        <!-- Background glow -->
+                                        <rect x="2" y="2" width="28" height="28" fill="#16192b"/>
+                                        <!-- Hair -->
+                                        <rect x="9" y="5" width="14" height="4" fill="#1e293b"/>
+                                        <rect x="8" y="7" width="2" height="6" fill="#1e293b"/>
+                                        <rect x="22" y="7" width="2" height="6" fill="#1e293b"/>
+                                        <!-- Head / Face -->
+                                        <rect x="10" y="9" width="12" height="10" fill="#fbd38d"/>
+                                        <!-- Headset Band -->
+                                        <rect x="7" y="6" width="2" height="8" fill="#ff6b35"/>
+                                        <rect x="23" y="6" width="2" height="8" fill="#ff6b35"/>
+                                        <rect x="9" y="4" width="14" height="2" fill="#ff6b35"/>
+                                        <!-- Glasses & Eyes -->
+                                        <rect x="10" y="12" width="5" height="3" fill="#00f5d4"/>
+                                        <rect x="17" y="12" width="5" height="3" fill="#00f5d4"/>
+                                        <rect x="15" y="13" width="2" height="1" fill="#e2e8f0"/>
+                                        <!-- Smile -->
+                                        <rect x="14" y="16" width="4" height="1" fill="#7c2d12"/>
+                                        <!-- Hoodie / Torso -->
+                                        <rect x="8" y="19" width="16" height="9" fill="#3b82f6"/>
+                                        <rect x="11" y="19" width="10" height="9" fill="#1d4ed8"/>
+                                        <!-- Laptop in front -->
+                                        <rect x="10" y="23" width="12" height="6" fill="#94a3b8"/>
+                                        <rect x="11" y="24" width="10" height="4" fill="#0f172a"/>
+                                        <!-- Unity Logo pixel on laptop -->
+                                        <rect x="15" y="25" width="2" height="2" fill="#00f5d4"/>
+                                    </svg>
+                                    <div id="avatarFloatingText" class="hidden absolute -top-2 right-2 font-pixel text-[9px] text-pixelAmber bg-bgDark px-1.5 py-0.5 rounded border border-pixelAmber">
+                                        HELLO!
+                                    </div>
+                                </div>
+                                <span class="text-[11px] text-slate-400 mt-2 font-mono">Click Avatar to Interact</span>
+                            </div>
+
+                            <!-- Live RPG Character Stats -->
+                            <div class="sm:col-span-7 space-y-2.5 text-xs font-mono">
+                                <div class="flex justify-between items-center border-b border-borderPixel/60 pb-1.5">
+                                    <span class="text-slate-400">ROLE:</span>
+                                    <span class="text-pixelAmber font-bold">Unity Gameplay Intern</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-borderPixel/60 pb-1.5">
+                                    <span class="text-slate-400">UNIVERSITY:</span>
+                                    <span class="text-white">Can Tho Univ (2023-2027)</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-borderPixel/60 pb-1.5">
+                                    <span class="text-slate-400">MAJOR:</span>
+                                    <span class="text-pixelCyan">Software Engineering</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-borderPixel/60 pb-1.5">
+                                    <span class="text-slate-400">GPA:</span>
+                                    <span class="text-pixelGreen font-bold">3.56 / 4.00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">LANGUAGES:</span>
+                                    <span class="text-slate-200">EN (Basic) • JP (N5 Learner)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Interactive Gameplay Canvas inside Hero Card -->
+                        <div class="mt-4 pt-3 border-t border-borderPixel">
+                            <div class="flex justify-between items-center text-[11px] text-slate-400 mb-1.5">
+                                <span class="font-pixel text-[9px] text-pixelCyan">INTERACTIVE TECHNICAL SKETCH</span>
+                                <button onclick="spawnHeroBurst()" class="text-pixelOrange hover:underline font-mono text-[11px]">
+                                    Click to spawn particles
+                                </button>
+                            </div>
+                            <canvas id="heroSimCanvas" class="w-full h-28 rounded bg-[#07080c] border border-borderPixel cursor-crosshair"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= FEATURED PROJECTS SECTION ================= -->
+        <!-- Follows Video 1 Tips: 1-3 High Quality Game Examples, Team + Solo, Development Process, Demo Preview -->
+        <section id="projects" class="scroll-mt-24 space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-borderPixel pb-4">
+                <div>
+                    <div class="text-pixelOrange font-pixel text-xs mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-joystick"></i>
+                        <span>SELECT STAGE // 1-3 FEATURED GAMES</span>
+                    </div>
+                    <h2 class="font-pixel text-xl sm:text-2xl text-white">FEATURED PROJECTS</h2>
+                </div>
+
+                <!-- Project Filter Tabs -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterProjects('all')" id="filter-all" class="filter-btn px-3 py-1.5 rounded font-pixel text-[10px] bg-pixelOrange text-bgDark border border-pixelOrange transition">
+                        ALL (3)
+                    </button>
+                    <button onclick="filterProjects('team')" id="filter-team" class="filter-btn px-3 py-1.5 rounded font-pixel text-[10px] bg-bgPanel text-slate-300 border border-borderPixel hover:border-pixelOrange transition">
+                        TEAM PROJECTS (2)
+                    </button>
+                    <button onclick="filterProjects('solo')" id="filter-solo" class="filter-btn px-3 py-1.5 rounded font-pixel text-[10px] bg-bgPanel text-slate-300 border border-borderPixel hover:border-pixelOrange transition">
+                        SOLO DEV (1)
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3 Featured Game Cards Grid (Styled like Video 2 Featured Projects) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-7" id="featuredProjectsGrid">
+
+                <!-- PROJECT 1: MINI MOVING (TEAM PROJECT) -->
+                <article data-category="team" class="project-card pixel-box rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <!-- Interactive Canvas / GIF Preview Header -->
+                        <div class="relative h-48 bg-[#0b0e17] border-b border-borderPixel overflow-hidden group">
+                            <canvas id="canvasMiniMoving" class="w-full h-full block"></canvas>
+                            
+                            <!-- Top Badges -->
+                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded bg-pixelCyan/90 text-bgDark font-pixel text-[9px] font-bold shadow">
+                                    <i class="fa-solid fa-users mr-1"></i>TEAM OF 3
+                                </span>
+                                <span class="px-2.5 py-1 rounded bg-bgDark/90 text-pixelAmber border border-pixelAmber/40 font-mono text-[10px] font-semibold">
+                                    Unity 2D Mobile
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-bgDark/80 text-[10px] text-slate-300 border border-borderPixel">
+                                Sep 2026 – Present
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <div class="text-xs font-mono text-pixelOrange mb-1">Gameplay &amp; UI Developer</div>
+                                <h3 class="font-pixel text-base text-white tracking-wide">MINI MOVING</h3>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                A 2D bin-packing mobile puzzle game where players arrange cargo into a truck's grid within a <span class="text-white font-medium">"Time-Budget Economy"</span> system.
+                            </p>
+
+                            <!-- Development Process Highlights (Video 1 Tip) -->
+                            <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-slate-300">
+                                <div class="font-pixel text-[9px] text-pixelCyan mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
+                                <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
+                                    <li>Built core <span class="text-white">Gameplay UI</span> (Time Gauge, Order Result) &amp; reusable dynamic Prefabs.</li>
+                                    <li>Managed <span class="text-white">Game State Flow</span> across UI and main puzzle loop.</li>
+                                    <li>Designed modular <span class="text-pixelAmber">ScriptableObject</span> Upgrade System.</li>
+                                    <li>Wrote <span class="text-pixelGreen">Automated Tests</span> for core grid &amp; upgrade logic.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">C#</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">ScriptableObjects</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">UI State Machine</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">Unit Testing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Buttons -->
+                    <div class="p-5 pt-0 grid grid-cols-2 gap-2.5">
+                        <button onclick="openProjectModal('minimoving')" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-2.5 rounded text-[10px]">
+                            <i class="fa-solid fa-code-branch"></i>
+                            <span>DEV PROCESS</span>
+                        </button>
+                        <a href="https://github.com/Atus229/CT239_ProjectGame" target="_blank" rel="noopener noreferrer" onmouseenter="playSound('hover')" class="pixel-btn py-2.5 rounded text-[10px] text-white">
+                            <i class="fa-brands fa-github"></i>
+                            <span>SOURCE</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- PROJECT 2: APOCALYPSE GRID (SOLO DEVELOPER) -->
+                <article data-category="solo" class="project-card pixel-box rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <!-- Interactive Canvas / GIF Preview Header -->
+                        <div class="relative h-48 bg-[#0b0e17] border-b border-borderPixel overflow-hidden group">
+                            <canvas id="canvasApocalypse" class="w-full h-full block"></canvas>
+                            
+                            <!-- Top Badges -->
+                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded bg-pixelOrange text-bgDark font-pixel text-[9px] font-bold shadow">
+                                    <i class="fa-solid fa-user-astronaut mr-1"></i>SOLO DEV
+                                </span>
+                                <span class="px-2.5 py-1 rounded bg-bgDark/90 text-pixelGreen border border-pixelGreen/40 font-mono text-[10px] font-semibold">
+                                    Tested @ 300 Enemies
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-bgDark/80 text-[10px] text-slate-300 border border-borderPixel">
+                                May 2026 – Aug 2026
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <div class="text-xs font-mono text-pixelCyan mb-1">Solo Gameplay Programmer</div>
+                                <h3 class="font-pixel text-base text-white tracking-wide">APOCALYPSE GRID</h3>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                A Rogue-lite 2D Top-Down Shooter featuring <span class="text-white font-medium">procedural dungeon generation (BSP)</span> and fast-paced wave survival combat.
+                            </p>
+
+                            <!-- Development Process Highlights -->
+                            <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-slate-300">
+                                <div class="font-pixel text-[9px] text-pixelOrange mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
+                                <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
+                                    <li>Procedural dungeons via <span class="text-white">BSP (Loop &amp; Queue)</span> + Random Walk &amp; bitmasking walls.</li>
+                                    <li><span class="text-pixelGreen">Object Pooling</span> for bullets &amp; enemies, stress-tested with ~300 active enemies at Level 50.</li>
+                                    <li>Enemy AI (chasing, obstacle avoidance, wave respawn) &amp; 360° aiming.</li>
+                                    <li>Loot drops, quest items &amp; <span class="text-pixelAmber">ScriptableObject</span> upgrade dashboard.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">BSP Algorithm</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">Object Pooling</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">Bitmasking</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">2D AI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Buttons -->
+                    <div class="p-5 pt-0 grid grid-cols-3 gap-2">
+                        <a href="https://kimgion.itch.io/apocalypse-grid" target="_blank" rel="noopener noreferrer" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-2.5 rounded text-[9px]">
+                            <i class="fa-brands fa-itch-io"></i>
+                            <span>PLAY DEMO</span>
+                        </a>
+                        <button onclick="openProjectModal('apocalypse')" onmouseenter="playSound('hover')" class="pixel-btn py-2.5 rounded text-[9px] text-pixelCyan border-pixelCyan">
+                            <i class="fa-solid fa-code"></i>
+                            <span>DEV INFO</span>
+                        </button>
+                        <a href="https://github.com/KimgionDev/Apocalypse-Grid" target="_blank" rel="noopener noreferrer" onmouseenter="playSound('hover')" class="pixel-btn py-2.5 rounded text-[9px] text-white">
+                            <i class="fa-brands fa-github"></i>
+                            <span>SOURCE</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- PROJECT 3: FIRE EVACUATION SIMULATION (TEAM LEADER & AI DESIGNER) -->
+                <article data-category="team" class="project-card pixel-box rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <!-- Interactive Canvas / GIF Preview Header -->
+                        <div class="relative h-48 bg-[#0b0e17] border-b border-borderPixel overflow-hidden group">
+                            <canvas id="canvasFireEvac" class="w-full h-full block"></canvas>
+                            
+                            <!-- Top Badges -->
+                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded bg-pixelPurple text-white font-pixel text-[9px] font-bold shadow">
+                                    <i class="fa-solid fa-crown mr-1"></i>TEAM LEAD (3)
+                                </span>
+                                <span class="px-2.5 py-1 rounded bg-bgDark/90 text-pixelCyan border border-pixelCyan/40 font-mono text-[10px] font-semibold">
+                                    Utility AI / ABM
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-bgDark/80 text-[10px] text-slate-300 border border-borderPixel">
+                                Sep 2026 – Present
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <div class="text-xs font-mono text-pixelAmber mb-1">Team Leader &amp; Utility AI Designer</div>
+                                <h3 class="font-pixel text-base text-white tracking-wide">FIRE EVAC SIM</h3>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                An Agent-Based Modeling (ABM) emergency evacuation simulation powered by multi-agent <span class="text-white font-medium">Utility AI decision matrices</span> and navigation graphs.
+                            </p>
+
+                            <!-- Development Process Highlights -->
+                            <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-slate-300">
+                                <div class="font-pixel text-[9px] text-pixelPurple mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
+                                <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
+                                    <li>Led 3-person team: authored SDD, 5-week roadmap &amp; <span class="text-white">Utility AI Matrix</span> (scoring, penalties, tie-breaking).</li>
+                                    <li>Constructed <span class="text-white">50x50 office map</span> &amp; obstacle-avoiding navigation graph in GAML.</li>
+                                    <li>Built real-time simulation tracking charts for escaped evacuees, casualties &amp; panic levels.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">Utility AI</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">Pathfinding Graph</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">GAML / GAMA</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-slate-300">System Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Buttons -->
+                    <div class="p-5 pt-0 grid grid-cols-2 gap-2.5">
+                        <button onclick="openProjectModal('fireevac')" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-2.5 rounded text-[10px]">
+                            <i class="fa-solid fa-brain"></i>
+                            <span>UTILITY AI</span>
+                        </button>
+                        <a href="https://github.com/KimgionDev/fire-evac-sim" target="_blank" rel="noopener noreferrer" onmouseenter="playSound('hover')" class="pixel-btn py-2.5 rounded text-[10px] text-white">
+                            <i class="fa-brands fa-github"></i>
+                            <span>SOURCE</span>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Secondary Software Engineering Projects Accordion/Row -->
+            <div class="pixel-box rounded-xl p-5 bg-bgPanel/70">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-borderPixel">
+                    <div class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-terminal text-pixelCyan"></i>
+                        <h3 class="font-pixel text-xs sm:text-sm text-white">OTHER SOFTWARE &amp; TOOLING PROJECTS (.NET / SQL)</h3>
+                    </div>
+                    <span class="text-xs text-slate-400">C# Desktop, Database Management &amp; Collaborative Workflows</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    <!-- CTU-Scheduler -->
+                    <div class="p-4 rounded-lg bg-bgDark border border-borderPixel hover:border-pixelCyan transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-2 mb-1">
+                                <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-calendar-check text-pixelCyan"></i>
+                                    CTU-Scheduler (University Research Project)
+                                </h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-pixelCyan/15 text-pixelCyan font-mono">Team of 4</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-2">Apr 2026 – Oct 2026</p>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Built multi-timetable Excel export automation and an interactive timeline view of university class schedule data fetched from Can Tho University's portal, along with full technical documentation.
+                            </p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-borderPixel/60 flex justify-between items-center text-xs">
+                            <span class="text-slate-400 font-mono text-[11px]">C# • Data Parsing • Excel Export</span>
+                            <a href="https://github.com/d3nhatv0lam/CTU-Scheduler" target="_blank" rel="noopener noreferrer" class="text-pixelCyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- VocabMaster -->
+                    <div class="p-4 rounded-lg bg-bgDark border border-borderPixel hover:border-pixelAmber transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-2 mb-1">
+                                <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-book-open-reader text-pixelAmber"></i>
+                                    VocabMaster (Desktop Application)
+                                </h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-pixelAmber/15 text-pixelAmber font-mono">Solo Dev</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-2">Jan 2026 – Mar 2026</p>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Built in C# WinForms with SQL Server (ADO.NET): features auto translation, dictionary lookup, flashcards, adaptive "hard words" quiz engine, pie/line analytics dashboard, and JSON backup.
+                            </p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-borderPixel/60 flex justify-between items-center text-xs">
+                            <span class="text-slate-400 font-mono text-[11px]">C# WinForms • SQL Server • ADO.NET</span>
+                            <a href="https://github.com/KimgionDev/VocabMaster-Winform" target="_blank" rel="noopener noreferrer" class="text-pixelAmber hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT ME & GITHUB STATS SECTION (Inspired by Video 2) ================= -->
+        <section id="about" class="scroll-mt-24 space-y-8">
+            <div class="text-center space-y-2">
+                <div class="text-pixelOrange font-pixel text-xs">PLAYER BIO // CHARACTER PROFILE</div>
+                <h2 class="font-pixel text-xl sm:text-2xl text-white">ABOUT ME</h2>
+            </div>
+
+            <!-- Main About Card (Matches Video 2 Rounded Dark Container) -->
+            <div class="pixel-box rounded-3xl p-6 sm:p-10 bg-gradient-to-br from-[#121521] to-[#0d0f18]">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Left Avatar Emblem -->
+                    <div class="lg:col-span-4 flex flex-col items-center text-center space-y-3">
+                        <div class="w-44 h-44 rounded-full bg-bgDark border-4 border-pixelOrange/80 p-4 flex items-center justify-center shadow-lg relative">
+                            <svg viewBox="0 0 32 32" class="w-32 h-32" shape-rendering="crispEdges">
+                                <rect x="9" y="4" width="14" height="4" fill="#1e293b"/>
+                                <rect x="10" y="8" width="12" height="10" fill="#fbd38d"/>
+                                <rect x="7" y="5" width="2" height="8" fill="#00f5d4"/>
+                                <rect x="23" y="5" width="2" height="8" fill="#00f5d4"/>
+                                <rect x="10" y="11" width="5" height="3" fill="#ff6b35"/>
+                                <rect x="17" y="11" width="5" height="3" fill="#ff6b35"/>
+                                <rect x="14" y="15" width="4" height="1" fill="#7c2d12"/>
+                                <rect x="7" y="18" width="18" height="10" fill="#ff6b35"/>
+                                <rect x="10" y="18" width="12" height="10" fill="#1e293b"/>
+                                <!-- Controller Icon on Shirt -->
+                                <rect x="13" y="21" width="6" height="4" fill="#ffb703"/>
+                                <rect x="14" y="22" width="1" height="2" fill="#090a0f"/>
+                                <rect x="17" y="22" width="1" height="1" fill="#090a0f"/>
+                            </svg>
+                            <span class="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-pixelGreen text-bgDark font-pixel text-[9px]">
+                                GPA 3.56
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="font-pixel text-sm text-white">KimgionDev</h3>
+                            <p class="text-xs text-pixelCyan font-mono mt-1">Can Tho University (2023 – 2027)</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Bio Description -->
+                    <div class="lg:col-span-8 space-y-4">
+                        <h3 class="font-pixel text-base sm:text-lg text-pixelAmber">
+                            &gt; SOFTWARE ENGINEERING STUDENT SEEKING UNITY GAMEPLAY INTERNSHIP
+                        </h3>
+                        <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                            I am a 4th-year <span class="text-white font-semibold">Software Engineering student at Can Tho University (GPA 3.56/4.0)</span>, expecting to graduate in 2027. I have hands-on experience in 2D game development using <span class="text-pixelCyan font-semibold">Unity and C#</span> through academic and personal projects.
+                        </p>
+                        <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                            My coursework and project work focus on <span class="text-white">gameplay systems, UI state flow, Utility AI, procedural dungeon generation (BSP), Object Pooling, and ScriptableObject-based data design</span>. I am seeking a <span class="text-pixelAmber font-semibold">Unity Gameplay Intern</span> position to contribute to gameplay systems and AI behavior in a real production team.
+                        </p>
+
+                        <!-- Key Highlights Badges -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                                <div class="font-pixel text-xs text-pixelOrange">3.56/4.0</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Academic GPA</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                                <div class="font-pixel text-xs text-pixelCyan">300+ ENTITIES</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Object Pooling Stress Test</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                                <div class="font-pixel text-xs text-pixelAmber">TEAM &amp; SOLO</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Git PR + CodeRabbit</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                                <div class="font-pixel text-xs text-pixelGreen">EN / JP</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Basic EN • N5 Learner</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live GitHub Stats (Directly from User's GitHub Profile Markdown) -->
+                <div class="mt-8 pt-6 border-t border-borderPixel">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-pixel text-xs text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-simple text-pixelCyan"></i>
+                            GITHUB REPOSITORIES &amp; ACTIVITY (@KimgionDev)
+                        </span>
+                        <a href="https://github.com/KimgionDev" target="_blank" rel="noopener noreferrer" class="text-xs text-pixelOrange hover:underline font-mono">
+                            github.com/KimgionDev &rarr;
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                        <img src="https://github-readme-stats.shion.dev/api?username=KimgionDev&theme=vision-friendly-dark&hide_border=false&include_all_commits=true&count_private=true" 
+                             alt="KimgionDev GitHub Stats" 
+                             class="w-full h-auto rounded-lg border border-borderPixel bg-bgDark p-1"
+                             onerror="this.onerror=null; this.src='https://placehold.co/450x195/12141f/ff6b35?text=GitHub+Stats:+KimgionDev'"/>
+                        <img src="https://streak-stats.demolab.com/?user=KimgionDev&theme=vision-friendly-dark&hide_border=false" 
+                             alt="KimgionDev GitHub Streak" 
+                             class="w-full h-auto rounded-lg border border-borderPixel bg-bgDark p-1"
+                             onerror="this.onerror=null; this.src='https://placehold.co/450x195/12141f/00f5d4?text=GitHub+Streak:+KimgionDev'"/>
+                        <img src="https://github-readme-stats.shion.dev/api/top-langs/?username=KimgionDev&theme=vision-friendly-dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact" 
+                             alt="KimgionDev Top Languages" 
+                             class="w-full h-auto rounded-lg border border-borderPixel bg-bgDark p-1"
+                             onerror="this.onerror=null; this.src='https://placehold.co/450x195/12141f/ffb703?text=Top+Languages:+C%23+%2F+Unity'"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ================= SKILLS & TOOLS SECTION (Strictly synced with CV Skills) ================= -->
+        <section id="skills" class="scroll-mt-24 space-y-8">
+            <div class="text-center space-y-2">
+                <div class="text-pixelCyan font-pixel text-xs">TECHNICAL SKILLS // FROM RESUME</div>
+                <h2 class="font-pixel text-xl sm:text-2xl text-white">SKILLS &amp; TOOLS</h2>
+            </div>
+
+            <!-- 5 Exact CV Skill Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                
+                <!-- 1. Game Engine & Languages -->
+                <div class="pixel-box rounded-xl p-5 space-y-3">
+                    <h3 class="font-pixel text-xs text-pixelOrange flex items-center gap-2">
+                        <i class="fa-brands fa-unity"></i>
+                        <span>GAME ENGINE &amp; LANGUAGES</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelOrange">•</span> Unity (2D Core)</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelOrange">•</span> C#</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelOrange">•</span> GAML (Simulation)</span>
+                    </div>
+                </div>
+
+                <!-- 2. Gameplay Programming -->
+                <div class="pixel-box rounded-xl p-5 space-y-3">
+                    <h3 class="font-pixel text-xs text-pixelCyan flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>GAMEPLAY PROGRAMMING</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelCyan">•</span> Singleton</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelCyan">•</span> Object Pooling</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelCyan">•</span> State Machine</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelCyan">•</span> Grid-based Systems</span>
+                    </div>
+                </div>
+
+                <!-- 3. Architecture & AI -->
+                <div class="pixel-box rounded-xl p-5 space-y-3">
+                    <h3 class="font-pixel text-xs text-pixelAmber flex items-center gap-2">
+                        <i class="fa-solid fa-brain"></i>
+                        <span>ARCHITECTURE &amp; AI</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelAmber">•</span> MVC / MVVM</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelAmber">•</span> AI Behavior (Utility Matrix)</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelAmber">•</span> BSP Algorithm</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelAmber">•</span> Agent-Based Modeling (GAMA Platform)</span>
+                    </div>
+                </div>
+
+                <!-- 4. Tools, Platforms & Databases -->
+                <div class="pixel-box rounded-xl p-5 space-y-3">
+                    <h3 class="font-pixel text-xs text-pixelGreen flex items-center gap-2">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span>TOOLS, PLATFORMS &amp; DATABASES</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelGreen">•</span> Git &amp; GitHub (PR Workflow)</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelGreen">•</span> CodeRabbit (Automated Review)</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelPurple">•</span> AI-Assisted Coding (Antigravity, Codex)</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelCyan">•</span> SQL Server</span>
+                        <span class="skill-pill" onmouseenter="playSound('hover')"><span class="text-pixelCyan">•</span> MySQL</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= EXPERIENCE & EDUCATION TIMELINE (Video 2 Style Cards with Year Circles) ================= -->
+        <section id="experience" class="scroll-mt-24 space-y-12">
+            <div class="text-center space-y-2">
+                <div class="text-pixelAmber font-pixel text-xs">QUEST LOG // ACADEMIC &amp; PROJECT TIMELINE</div>
+                <h2 class="font-pixel text-xl sm:text-2xl text-white">EXPERIENCE</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                <!-- Q2 2026: Apocalypse Grid -->
+                <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
+                    <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelAmber flex items-center justify-center font-pixel text-[10px] text-white mx-auto -mt-16 mb-3 shadow-lg">
+                        Q2 '26
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-pixel text-xs text-pixelAmber leading-snug">
+                            APOCALYPSE GRID (SOLO DEV)
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Engineered a 2D Rogue-lite Top-Down Shooter in Unity with iterative BSP dungeon generation, bitmasking walls, and Object Pooling stress-tested with 300+ enemies.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-borderPixel text-[11px] text-pixelGreen font-mono">
+                        Unity 2D • C# • WebGL Build
+                    </div>
+                </div>
+
+                <!-- Sep 2026 - Present: Mini Moving & Fire Evac -->
+                <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
+                    <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelGreen flex items-center justify-center font-pixel text-[10px] text-pixelGreen mx-auto -mt-16 mb-3 shadow-lg">
+                        NOW
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-pixel text-xs text-pixelGreen leading-snug">
+                            MINI MOVING &amp; FIRE EVAC AI
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Developing UI State Flow, ScriptableObject upgrades &amp; Unit Tests for <span class="text-white">Mini Moving</span> (Team of 3), while leading Utility AI design for <span class="text-white">Fire Evacuation Sim</span>.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-borderPixel text-[11px] text-pixelOrange font-mono">
+                        Ready for Unity Internship
+                    </div>
+                </div>
+
+                <!-- Q1 2026: VocabMaster & CTU-Scheduler -->
+                <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
+                    <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelCyan flex items-center justify-center font-pixel text-[10px] text-white mx-auto -mt-16 mb-3 shadow-lg">
+                        Q1 '26
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-pixel text-xs text-pixelCyan leading-snug">
+                            VOCABMASTER &amp; CTU-SCHEDULER
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Built C# WinForms + SQL Server desktop tool with analytics charts &amp; collaborated in a 4-person research team on university timetable automation.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-borderPixel text-[11px] text-slate-400 font-mono">
+                        .NET • ADO.NET • Excel Export
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= LET'S CONNECT SECTION (Video 2 Primary/Secondary Menu Layout) ================= -->
+        <section id="contact" class="scroll-mt-24 space-y-8 pb-12">
+            <div class="text-center space-y-2">
+                <div class="text-pixelOrange font-pixel text-xs">MULTIPLAYER LOBBY // HIRE OR COLLABORATE</div>
+                <h2 class="font-pixel text-xl sm:text-2xl text-white">LET'S CONNECT</h2>
+            </div>
+
+            <div class="pixel-box rounded-2xl p-6 sm:p-10 max-w-4xl mx-auto space-y-8">
+                <!-- Primary Actions -->
+                <div class="space-y-3">
+                    <div class="font-pixel text-xs text-pixelOrange tracking-wider">PRIMARY:</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button onclick="openCVModal()" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-5 px-6 rounded-lg text-xs sm:text-sm w-full">
+                            <i class="fa-solid fa-file-pdf text-base"></i>
+                            <span>VIEW CV</span>
+                        </button>
+                        <a href="mailto:phatbo13579@gmail.com?subject=Unity%20Gameplay%20Internship%20-%20Nguyen%20Ngoc%20Duc%20Phat" onmouseenter="playSound('hover')" onclick="playSound('click')" class="pixel-btn py-5 px-6 rounded-lg text-xs sm:text-sm text-white w-full">
+                            <i class="fa-solid fa-envelope text-pixelOrange text-base"></i>
+                            <span>EMAIL ME DIRECTLY</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Secondary Actions -->
+                <div class="space-y-3">
+                    <div class="font-pixel text-xs text-pixelCyan tracking-wider">SECONDARY:</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <a href="https://github.com/KimgionDev" target="_blank" rel="noopener noreferrer" onmouseenter="playSound('hover')" class="pixel-btn py-4 px-4 rounded-lg text-xs text-white w-full">
+                            <i class="fa-brands fa-github text-base text-pixelAmber"></i>
+                            <span>GITHUB (@KimgionDev)</span>
+                        </a>
+                        <button onclick="copyContact('0836663188', 'Phone Number')" onmouseenter="playSound('hover')" class="pixel-btn py-4 px-4 rounded-lg text-xs text-white w-full">
+                            <i class="fa-solid fa-phone text-pixelGreen"></i>
+                            <span>CALL: 0836663188</span>
+                        </button>
+                        <button onclick="copyContact('phatbo13579@gmail.com', 'Email Address')" onmouseenter="playSound('hover')" class="pixel-btn py-4 px-4 rounded-lg text-xs text-white w-full">
+                            <i class="fa-solid fa-copy text-pixelCyan"></i>
+                            <span>COPY EMAIL</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (Matches Video 2 Outro) -->
+    <footer class="border-t-2 border-borderPixel bg-[#06070b] py-8 px-4 text-center space-y-3">
+        <div class="font-pixel text-xs sm:text-sm text-white tracking-wider">
+            <span class="text-pixelOrange">&gt;</span> THANKS FOR VISITING MY PORTFOLIO<span class="blink text-pixelCyan">_</span>
+        </div>
+        <p class="text-xs text-slate-400 font-mono">
+            NGUYEN NGOC DUC PHAT (KimgionDev) • Can Tho University • Built for GitHub Pages (`.github.io`)
+        </p>
+    </footer>
+
+    <!-- ================= INTERACTIVE PROJECT ARCHITECTURE MODAL ================= -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="pixel-box rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-5 border-2 border-pixelOrange">
+            <div class="flex items-center justify-between border-b border-borderPixel pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-pixelOrange"></span>
+                    <h3 id="modalTitle" class="font-pixel text-sm sm:text-base text-white">PROJECT BREAKDOWN</h3>
+                </div>
+                <button onclick="closeProjectModal()" class="px-3 py-1 rounded bg-bgDark border border-borderPixel text-slate-300 hover:text-pixelOrange font-pixel text-xs">
+                    [X] ESC
+                </button>
+            </div>
+
+            <div id="modalBody" class="space-y-4 text-xs sm:text-sm text-slate-200 leading-relaxed">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= INTERACTIVE RESUME / CV VIEWER & DOWNLOAD MODAL ================= -->
+    <div id="cvModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="pixel-box rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-5 border-2 border-pixelCyan">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-borderPixel pb-4">
+                <div>
+                    <span class="text-[10px] font-pixel text-pixelCyan">OFFICIAL RESUME // NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf</span>
+                    <h3 class="font-pixel text-sm sm:text-base text-white mt-1">NGUYEN NGOC DUC PHAT — UNITY GAMEPLAY INTERN</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf" download="NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf" target="_blank" class="pixel-btn pixel-btn-primary px-3 py-2 rounded text-[10px]">
+                        <i class="fa-solid fa-download"></i>
+                        <span>DOWNLOAD PDF</span>
+                    </a>
+                    <button onclick="window.print()" class="pixel-btn px-3 py-2 rounded text-[10px] text-white">
+                        <i class="fa-solid fa-print"></i>
+                        <span>PRINT</span>
+                    </button>
+                    <button onclick="closeCVModal()" class="px-3 py-2 rounded bg-bgDark border border-borderPixel text-slate-300 hover:text-pixelOrange font-pixel text-xs">
+                        [X]
+                    </button>
+                </div>
+            </div>
+
+            <!-- Full Formatted Resume Content inside Modal -->
+            <div class="bg-bgDark border border-borderPixel rounded-xl p-5 space-y-5 text-xs leading-relaxed font-mono">
+                <div class="flex flex-col sm:flex-row justify-between gap-2 border-b border-borderPixel pb-3">
+                    <div>
+                        <div class="text-base font-bold text-white">NGUYEN NGOC DUC PHAT</div>
+                        <div class="text-pixelOrange font-semibold">Unity Gameplay Intern</div>
+                    </div>
+                    <div class="text-slate-300 sm:text-right">
+                        <div>Email: phatbo13579@gmail.com | Phone: 0836663188</div>
+                        <div>GitHub: github.com/KimgionDev | Location: Can Tho</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-pixelCyan font-pixel text-[10px] mb-1">OBJECTIVE</div>
+                    <p class="text-slate-300">
+                        Software Engineering student at Can Tho University with experience in 2D game development using Unity and C#. Hands-on with gameplay systems, UI state flow, Utility AI and ScriptableObject-based data design through academic and personal projects. Seeking a Unity Gameplay Intern position to work on gameplay systems and AI behavior in a real production team.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="text-pixelCyan font-pixel text-[10px] mb-1">EDUCATION</div>
+                    <div class="flex justify-between text-white font-bold">
+                        <span>Can Tho University — Major: Software Engineering | GPA: 3.56/4.0</span>
+                        <span>2023 – 2027</span>
+                    </div>
+                    <p class="text-slate-300 mt-1">
+                        Relevant Coursework: OOP, Data Structures &amp; Algorithms, Software Architecture &amp; Design, Database Management Systems.<br>
+                        Languages: English (basic, expected TOEIC 12/2026), Japanese (studying N5).
+                    </p>
+                </div>
+
+                <div>
+                    <div class="text-pixelCyan font-pixel text-[10px] mb-2">TECHNICAL SKILLS</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-300">
+                        <div class="p-2 rounded bg-bgPanel border border-borderPixel"><strong class="text-white">Game Engine &amp; Languages:</strong> Unity (2D Core), C#, GAML (Simulation)</div>
+                        <div class="p-2 rounded bg-bgPanel border border-borderPixel"><strong class="text-white">Gameplay Programming:</strong> Design Patterns (Singleton, Object Pooling, State Machine), Grid-based Systems</div>
+                        <div class="p-2 rounded bg-bgPanel border border-borderPixel"><strong class="text-white">Architecture &amp; AI:</strong> MVC, MVVM, AI Behavior (Utility Matrix), BSP Algorithm, Agent-Based Modeling (GAMA Platform)</div>
+                        <div class="p-2 rounded bg-bgPanel border border-borderPixel"><strong class="text-white">Tools &amp; Platforms:</strong> Git, GitHub (PR workflow, CodeRabbit for automated review), AI-assisted coding (Antigravity, Codex)</div>
+                        <div class="p-2 rounded bg-bgPanel border border-borderPixel sm:col-span-2"><strong class="text-white">Databases:</strong> SQL Server, MySQL</div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="text-pixelCyan font-pixel text-[10px]">GAME DEVELOPMENT PROJECTS</div>
+                    
+                    <div class="p-3 rounded bg-bgPanel border border-borderPixel">
+                        <div class="flex justify-between font-bold text-white">
+                            <span>1. Mini Moving (Unity 2D - Mobile Puzzle Game) | Team size: 3 — Gameplay &amp; UI Developer</span>
+                            <span class="text-pixelAmber">Sep 2026 – Present</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-300 mt-1 space-y-0.5">
+                            <li>Developed core Gameplay UI (Time Gauge, Order Result) and reusable Prefabs for dynamic screens (Job Cards, Day Summary).</li>
+                            <li>Managed game State Flow by integrating UI systems smoothly into the main gameplay loop.</li>
+                            <li>Built a modular Upgrade System using ScriptableObjects for data configuration and balancing.</li>
+                            <li>Wrote Automated Tests to validate core gameplay logic and upgrade mechanics.</li>
+                        </ul>
+                        <div class="mt-1.5 text-[11px] text-pixelCyan">
+                            Source: <a href="https://github.com/Atus229/CT239_ProjectGame" target="_blank" rel="noopener noreferrer" class="underline">github.com/Atus229/CT239_ProjectGame</a>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded bg-bgPanel border border-borderPixel">
+                        <div class="flex justify-between font-bold text-white">
+                            <span>2. Apocalypse Grid (Unity 2D - Top-Down Shooter) | Solo Developer</span>
+                            <span class="text-pixelAmber">May 2026 – Aug 2026</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-300 mt-1 space-y-0.5">
+                            <li>Generated dungeons with BSP (loop &amp; Queue instead of recursion) and shaped walls with Random Walk &amp; bitmasking.</li>
+                            <li>Added Object Pooling for bullets and enemies, stress-tested with ~300 active enemies at Level 50.</li>
+                            <li>Wrote enemy AI (chasing, obstacle avoidance, wave respawn) and 360° aiming and shooting.</li>
+                            <li>Built gameplay loop and upgrade dashboard with ScriptableObjects (health, damage, speed, ammo).</li>
+                        </ul>
+                        <div class="mt-1.5 text-[11px] text-pixelCyan flex flex-wrap gap-4">
+                            <span>Source: <a href="https://github.com/KimgionDev/Apocalypse-Grid" target="_blank" rel="noopener noreferrer" class="underline">KimgionDev/Apocalypse-Grid</a></span>
+                            <span>Demo: <a href="https://kimgion.itch.io/apocalypse-grid" target="_blank" rel="noopener noreferrer" class="underline text-pixelOrange">kimgion.itch.io/apocalypse-grid</a></span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded bg-bgPanel border border-borderPixel">
+                        <div class="flex justify-between font-bold text-white">
+                            <span>3. Fire Evacuation Simulation (GAMA Platform) | Team size: 3 — Team Leader &amp; Designer</span>
+                            <span class="text-pixelAmber">Sep 2026 – Present</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-300 mt-1 space-y-0.5">
+                            <li>Led a 3-person team: wrote design document, 5-week plan, and designed Utility AI logic (scoring, penalties, priority bonuses, tie-breaking).</li>
+                            <li>Built 50x50 office map in GAML and a navigation graph for obstacle pathfinding + real-time simulation tracking charts.</li>
+                        </ul>
+                        <div class="mt-1.5 text-[11px] text-pixelCyan">
+                            Source: <a href="https://github.com/KimgionDev/fire-evac-sim" target="_blank" rel="noopener noreferrer" class="underline">github.com/KimgionDev/fire-evac-sim</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="text-pixelCyan font-pixel text-[10px]">SOFTWARE &amp; TOOLING PROJECTS (.NET / SQL)</div>
+                    <div class="p-3 rounded bg-bgPanel border border-borderPixel">
+                        <div class="flex justify-between font-bold text-white">
+                            <span>4. CTU-Scheduler (University Research Project) | Team size: 4</span>
+                            <span class="text-pixelAmber">Apr 2026 – Oct 2026</span>
+                        </div>
+                        <p class="text-slate-300 mt-1">Built multi-timetable Excel export automation and interactive timeline view for university class schedule data.</p>
+                        <div class="mt-1.5 text-[11px] text-pixelCyan">
+                            Source: <a href="https://github.com/d3nhatv0lam/CTU-Scheduler" target="_blank" rel="noopener noreferrer" class="underline">github.com/d3nhatv0lam/CTU-Scheduler</a>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded bg-bgPanel border border-borderPixel">
+                        <div class="flex justify-between font-bold text-white">
+                            <span>5. VocabMaster (Desktop Application) | Solo Developer</span>
+                            <span class="text-pixelAmber">Jan 2026 – Mar 2026</span>
+                        </div>
+                        <p class="text-slate-300 mt-1">C# WinForms + SQL Server desktop app with adaptive spaced quizzes, dictionary lookup, and analytics dashboard.</p>
+                        <div class="mt-1.5 text-[11px] text-pixelCyan">
+                            Source: <a href="https://github.com/KimgionDev/VocabMaster-Winform" target="_blank" rel="noopener noreferrer" class="underline">github.com/KimgionDev/VocabMaster-Winform</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= GITHUB.IO DEPLOYMENT & GIF REPLACEMENT GUIDE MODAL ================= -->
+    <div id="guideModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="pixel-box rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-4 border-2 border-pixelAmber">
+            <div class="flex items-center justify-between border-b border-borderPixel pb-3">
+                <h3 class="font-pixel text-xs sm:text-sm text-pixelAmber flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i>
+                    <span>HƯỚNG DẪN ĐẨY LÊN KIMGIONDEV.GITHUB.IO</span>
+                </h3>
+                <button onclick="closeGuideModal()" class="px-3 py-1 rounded bg-bgDark border border-borderPixel text-slate-300 hover:text-pixelOrange font-pixel text-xs">
+                    [X]
+                </button>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-200 leading-relaxed">
+                <div class="p-3.5 rounded-lg bg-bgDark border border-borderPixel space-y-1.5">
+                    <div class="font-bold text-pixelCyan">Bước 1: Tạo Repository GitHub Pages</div>
+                    <p>1. Vào GitHub của bạn (<code class="text-pixelAmber">github.com/KimgionDev</code>) &rarr; bấm <strong>New Repository</strong>.</p>
+                    <p>2. Đặt tên chính xác là: <code class="px-1.5 py-0.5 rounded bg-bgPanel text-pixelGreen font-bold">KimgionDev.github.io</code> (để ở chế độ Public).</p>
+                    <p>3. Upload file <code class="text-white">index.html</code> này và file CV <code class="text-white">NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf</code> vào cùng thư mục gốc.</p>
+                </div>
+
+                <div class="p-3.5 rounded-lg bg-bgDark border border-borderPixel space-y-1.5">
+                    <div class="font-bold text-pixelOrange">Bước 2: Thay ảnh GIF hoặc Video Trailer thật (Tùy chọn)</div>
+                    <p>Hiện tại mình đã lập trình sẵn <strong>3 mô phỏng HTML5 Canvas trực tiếp</strong> cho <em>Mini Moving</em>, <em>Apocalypse Grid</em> và <em>Fire Evacuation Sim</em> để web của bạn sống động ngay lập tức.</p>
+                    <p>Khi bạn có file <code class="text-pixelAmber">minimoving.gif</code> hoặc <code class="text-pixelAmber">apocalypse.gif</code>, bạn chỉ cần bỏ vào cùng thư mục và thay thẻ <code class="text-pixelCyan">&lt;canvas id="canvasMiniMoving"&gt;</code> bằng <code class="text-pixelCyan">&lt;img src="minimoving.gif" class="w-full h-full object-cover"&gt;</code>.</p>
+                </div>
+
+                <div class="p-3.5 rounded-lg bg-bgDark border border-borderPixel space-y-1.5">
+                    <div class="font-bold text-pixelGreen">Bước 3: Gắn link vào CV và GitHub Profile</div>
+                    <p>Sau 1 phút, trang web của bạn sẽ chạy tại: <code class="text-pixelGreen font-bold">https://kimgiondev.github.io</code>!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RETRO TOAST NOTIFICATION -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 hidden pixel-box bg-bgDark border-2 border-pixelGreen px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <span class="w-8 h-8 rounded bg-pixelGreen/20 text-pixelGreen flex items-center justify-center font-pixel text-xs">
+            +XP
+        </span>
+        <div>
+            <div id="toastTitle" class="font-pixel text-[10px] text-pixelGreen">COPIED TO CLIPBOARD!</div>
+            <div id="toastMessage" class="text-xs text-white font-mono mt-0.5">phatbo13579@gmail.com</div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC & LIVE GAMEPLAY SIMULATIONS ================= -->
+    <script>
+        /* -----------------------------------------------------------
+         * 1. RETRO 8-BIT WEB AUDIO SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
+         * ----------------------------------------------------------- */
+        let sfxEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+        }
+
+        function unlockAudio() {
+            initAudio();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume().catch(() => {});
+            }
+            window.removeEventListener('pointerdown', unlockAudio);
+            window.removeEventListener('keydown', unlockAudio);
+        }
+        window.addEventListener('pointerdown', unlockAudio, { once: true });
+        window.addEventListener('keydown', unlockAudio, { once: true });
+
+        function playSound(type) {
+            if (!sfxEnabled) return;
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume().catch(() => {});
+                }
+                if (audioCtx.state !== 'running') return;
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+                if (type === 'hover') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(680, now + 0.04);
+                    gain.gain.setValueAtTime(0.025, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else if (type === 'click') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.setValueAtTime(880, now + 0.05);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                } else if (type === 'powerup') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(330, now);
+                    osc.frequency.setValueAtTime(494, now + 0.06);
+                    osc.frequency.setValueAtTime(659, now + 0.12);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                    osc.start(now);
+                    osc.stop(now + 0.22);
+                }
+            } catch (e) {
+                // Ignore audio errors if blocked by browser autoplay policy
+            }
+        }
+
+        function toggleSFX() {
+            sfxEnabled = !sfxEnabled;
+            const icon = document.getElementById('sfxIcon');
+            const label = document.getElementById('sfxLabel');
+            if (sfxEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+                label.textContent = 'SFX: ON';
+                playSound('powerup');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+                label.textContent = 'SFX: OFF';
+            }
+        }
+
+        /* -----------------------------------------------------------
+         * 2. CLIPBOARD COPY & RETRO TOAST NOTIFICATION
+         * ----------------------------------------------------------- */
+        let toastTimeout = null;
+        function copyContact(value, label) {
+            playSound('powerup');
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(value).catch(() => {
+                    fallbackCopy(value);
+                });
+            } else {
+                fallbackCopy(value);
+            }
+
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastTitle').textContent = `COPIED ${label.toUpperCase()}! (+10 XP)`;
+            document.getElementById('toastMessage').textContent = value;
+            toast.classList.remove('hidden');
+
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        function fallbackCopy(value) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = value;
+            tempInput.style.position = 'fixed';
+            tempInput.style.left = '-9999px';
+            tempInput.style.top = '0';
+            document.body.appendChild(tempInput);
+            tempInput.focus();
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+            } catch (e) {}
+            document.body.removeChild(tempInput);
+        }
+
+        /* -----------------------------------------------------------
+         * 3. AVATAR INTERACTION, MOBILE MENU & PROJECT FILTERING
+         * ----------------------------------------------------------- */
+        let jumpTimeout = null;
+        let badgeTimeout = null;
+        function triggerAvatarJump() {
+            playSound('powerup');
+            const svg = document.getElementById('pixelAvatarSvg');
+            const badge = document.getElementById('avatarFloatingText');
+            if (!svg || !badge) return;
+
+            if (jumpTimeout) clearTimeout(jumpTimeout);
+            if (badgeTimeout) clearTimeout(badgeTimeout);
+
+            svg.classList.add('-translate-y-3', 'scale-105');
+            badge.classList.remove('hidden');
+
+            jumpTimeout = setTimeout(() => {
+                svg.classList.remove('-translate-y-3', 'scale-105');
+            }, 220);
+            badgeTimeout = setTimeout(() => {
+                badge.classList.add('hidden');
+            }, 900);
+        }
+
+        function toggleMobileMenu() {
+            playSound('click');
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            if (menu) {
+                const isHidden = menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = isHidden ? 'fa-solid fa-bars' : 'fa-solid fa-xmark text-pixelOrange';
+                }
+            }
+        }
+
+        function filterProjects(category) {
+            playSound('click');
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                btn.className = 'filter-btn px-3 py-1.5 rounded font-pixel text-[10px] bg-bgPanel text-slate-300 border border-borderPixel hover:border-pixelOrange transition';
+            });
+            const activeBtn = document.getElementById(`filter-${category}`);
+            if (activeBtn) {
+                activeBtn.className = 'filter-btn px-3 py-1.5 rounded font-pixel text-[10px] bg-pixelOrange text-bgDark border border-pixelOrange transition';
+            }
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            requestAnimationFrame(() => {
+                resizeAllCanvases();
+            });
+        }
+
+        /* -----------------------------------------------------------
+         * 4. MODALS (PROJECT ARCHITECTURE, CV VIEWER, GITHUB GUIDE)
+         * ----------------------------------------------------------- */
+        const projectDetails = {
+            minimoving: {
+                title: 'MINI MOVING — ARCHITECTURE & DEV PROCESS',
+                content: `
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-2.5 py-1 rounded bg-pixelCyan/20 text-pixelCyan font-semibold">Team Size: 3</span>
+                        <span class="px-2.5 py-1 rounded bg-pixelOrange/20 text-pixelOrange font-semibold">Role: Gameplay & UI Developer</span>
+                        <span class="px-2.5 py-1 rounded bg-bgDark border border-borderPixel text-slate-300">Sep 2026 – Present</span>
+                    </div>
+                    <p><strong>Game Concept:</strong> A 2D bin-packing puzzle game where players arrange irregularly shaped cargo into a truck's grid under a strict "Time-Budget Economy" system.</p>
+                    <div class="p-4 rounded-xl bg-bgDark border border-borderPixel space-y-2">
+                        <div class="font-pixel text-xs text-pixelAmber">KEY SYSTEMS IMPLEMENTED BY PHAT:</div>
+                        <ul class="list-disc list-inside space-y-1.5">
+                            <li><strong>UI State Flow & Dynamic Prefabs:</strong> Engineered the state transitions connecting the Order Selection screen, active Bin-Packing HUD (Time Gauge, Cargo Queue), and Order Result / Day Summary screens.</li>
+                            <li><strong>ScriptableObject Upgrade Architecture:</strong> Decoupled upgrade stats (truck grid capacity, time-budget bonuses, cargo value multipliers) into modular <code>ScriptableObject</code> assets so game designers can tweak balancing without touching code.</li>
+                            <li><strong>Automated Testing:</strong> Wrote NUnit tests in Unity Test Runner to verify cargo placement collision bounds and upgrade cost formulas.</li>
+                        </ul>
+                    </div>
+                `
+            },
+            apocalypse: {
+                title: 'APOCALYPSE GRID — PROCEDURAL BSP & OBJECT POOLING',
+                content: `
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-2.5 py-1 rounded bg-pixelOrange/20 text-pixelOrange font-semibold">Solo Developer</span>
+                        <span class="px-2.5 py-1 rounded bg-pixelGreen/20 text-pixelGreen font-semibold">Stress-Tested @ 300 Enemies</span>
+                        <span class="px-2.5 py-1 rounded bg-bgDark border border-borderPixel text-slate-300">May 2026 – Aug 2026</span>
+                    </div>
+                    <p><strong>Game Concept:</strong> A fast-paced 2D Rogue-lite Top-Down Shooter featuring procedural dungeon rooms and wave survival combat.</p>
+                    <div class="p-4 rounded-xl bg-bgDark border border-borderPixel space-y-2">
+                        <div class="font-pixel text-xs text-pixelCyan">TECHNICAL BREAKDOWN:</div>
+                        <ul class="list-disc list-inside space-y-1.5">
+                            <li><strong>Iterative BSP Dungeon Generation:</strong> Partitioned 2D space using an explicit <code>Queue&lt;BoundsInt&gt;</code> loop instead of recursion to avoid stack overhead, followed by Random Walk organic room carving and 4-bit/8-bit wall bitmasking for automatic tile placement.</li>
+                            <li><strong>Optimized Object Pooling:</strong> Eliminated runtime <code>Instantiate/Destroy</code> GC spikes by pre-warming pools for projectiles, VFX, and enemies—stress-tested with <strong>~300 simultaneous active enemies at Level 50</strong>.</li>
+                            <li><strong>Enemy AI & 360° Combat:</strong> Implemented obstacle-avoidance steering, wave respawn scaling, and ScriptableObject-driven player upgrades (HP, Damage, Speed, Ammo).</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <a href="https://kimgion.itch.io/apocalypse-grid" target="_blank" rel="noopener noreferrer" class="pixel-btn pixel-btn-primary px-4 py-2.5 rounded text-[10px]">
+                            <i class="fa-brands fa-itch-io"></i> PLAY DEMO ON ITCH.IO
+                        </a>
+                        <a href="https://github.com/KimgionDev/Apocalypse-Grid" target="_blank" rel="noopener noreferrer" class="pixel-btn px-4 py-2.5 rounded text-[10px] text-white">
+                            <i class="fa-brands fa-github"></i> VIEW GITHUB REPOSITORY
+                        </a>
+                    </div>
+                `
+            },
+            fireevac: {
+                title: 'FIRE EVACUATION SIM — UTILITY AI & ABM PATHFINDING',
+                content: `
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-2.5 py-1 rounded bg-pixelPurple/20 text-pixelPurple font-semibold">Team Leader & AI Designer (Team of 3)</span>
+                        <span class="px-2.5 py-1 rounded bg-pixelCyan/20 text-pixelCyan font-semibold">Utility AI Matrix</span>
+                        <span class="px-2.5 py-1 rounded bg-bgDark border border-borderPixel text-slate-300">Sep 2026 – Present</span>
+                    </div>
+                    <p><strong>Project Overview:</strong> An Agent-Based Modeling (ABM) simulation of emergency office evacuation during a spreading fire incident on the GAMA Platform.</p>
+                    <div class="p-4 rounded-xl bg-bgDark border border-borderPixel space-y-2">
+                        <div class="font-pixel text-xs text-pixelAmber">LEADERSHIP & AI ARCHITECTURE:</div>
+                        <ul class="list-disc list-inside space-y-1.5">
+                            <li><strong>Utility AI Decision Matrix:</strong> Designed multi-factor utility scoring (action scoring, hazard penalties, priority bonuses, and tie-breaking rules) governing autonomous behaviors for Evacuees, Firefighters, and Rescuers.</li>
+                            <li><strong>Spatial Navigation Graph:</strong> Built a 50x50 office environment in GAML with dynamic obstacle-avoiding pathfinding around smoke and fire zones.</li>
+                            <li><strong>Real-Time Analytics:</strong> Engineered live simulation tracking charts for escaped evacuees, casualties, and crowd panic propagation.</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <a href="https://github.com/KimgionDev/fire-evac-sim" target="_blank" rel="noopener noreferrer" class="pixel-btn pixel-btn-primary px-4 py-2.5 rounded text-[10px]">
+                            <i class="fa-brands fa-github"></i> VIEW GITHUB REPOSITORY
+                        </a>
+                    </div>
+                `
+            }
+        };
+
+        function openProjectModal(key) {
+            playSound('click');
+            const item = projectDetails[key];
+            if (!item) return;
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalBody').innerHTML = item.content;
+            document.getElementById('projectModal').classList.remove('hidden');
+        }
+
+        function closeProjectModal() {
+            playSound('hover');
+            document.getElementById('projectModal').classList.add('hidden');
+        }
+
+        function openCVModal() {
+            playSound('powerup');
+            document.getElementById('cvModal').classList.remove('hidden');
+        }
+
+        function closeCVModal() {
+            playSound('hover');
+            document.getElementById('cvModal').classList.add('hidden');
+        }
+
+        function openGuideModal() {
+            playSound('click');
+            document.getElementById('guideModal').classList.remove('hidden');
+        }
+
+        function closeGuideModal() {
+            playSound('hover');
+            document.getElementById('guideModal').classList.add('hidden');
+        }
+
+        function setupModalBackdrops() {
+            const modals = [
+                { id: 'projectModal', close: closeProjectModal },
+                { id: 'cvModal', close: closeCVModal },
+                { id: 'guideModal', close: closeGuideModal }
+            ];
+            modals.forEach(({ id, close }) => {
+                const modal = document.getElementById(id);
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            close();
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeProjectModal();
+                closeCVModal();
+                closeGuideModal();
+            }
+        });
+
+        /* -----------------------------------------------------------
+         * 5. LIVE INTERACTIVE GAMEPLAY CANVASES (HERO + 3 CARDS)
+         * ----------------------------------------------------------- */
+        // A. Hero Object-Pooling Particle Sandbox
+        const heroCanvas = document.getElementById('heroSimCanvas');
+        const heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
+        let heroEntities = [];
+
+        function resizeHeroCanvas() {
+            if (!heroCanvas) return;
+            const rect = heroCanvas.getBoundingClientRect();
+            if (rect.width > 0) {
+                heroCanvas.width = Math.floor(rect.width);
+                heroCanvas.height = Math.floor(rect.height || 112);
+            }
+        }
+
+        function spawnHeroBurst(cx, cy) {
+            playSound('click');
+            if (!heroCanvas) return;
+            const x = cx !== undefined ? cx : heroCanvas.width / 2;
+            const y = cy !== undefined ? cy : heroCanvas.height / 2;
+            const colors = ['#ff6b35', '#00f5d4', '#ffb703', '#38b000'];
+            for (let i = 0; i < 14; i++) {
+                const angle = (Math.PI * 2 * i) / 14 + Math.random() * 0.3;
+                const speed = 1 + Math.random() * 2.2;
+                heroEntities.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    size: 4 + Math.floor(Math.random() * 4),
+                    color: colors[i % colors.length],
+                    life: 90
+                });
+            }
+            if (heroEntities.length > 120) {
+                heroEntities.splice(0, heroEntities.length - 120);
+            }
+        }
+
+        if (heroCanvas) {
+            heroCanvas.addEventListener('mousedown', (e) => {
+                const rect = heroCanvas.getBoundingClientRect();
+                spawnHeroBurst(e.clientX - rect.left, e.clientY - rect.top);
+            });
+            heroCanvas.addEventListener('touchstart', (e) => {
+                const rect = heroCanvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                if (touch) {
+                    spawnHeroBurst(touch.clientX - rect.left, touch.clientY - rect.top);
+                }
+            }, { passive: true });
+        }
+
+        // B. Card 1: Mini Moving (2D Cargo Grid Bin-Packing Simulation)
+        const miniCanvas = document.getElementById('canvasMiniMoving');
+        const miniCtx = miniCanvas ? miniCanvas.getContext('2d') : null;
+        const cargoShapes = [
+            { w: 2, h: 2, color: '#ff6b35' },
+            { w: 3, h: 1, color: '#00f5d4' },
+            { w: 2, h: 1, color: '#ffb703' },
+            { w: 1, h: 2, color: '#9b5de5' },
+            { w: 2, h: 2, color: '#38b000' }
+        ];
+        let packedBlocks = [];
+        let miniTimer = 0;
+
+        // C. Card 2: Apocalypse Grid (BSP Rooms + Top-Down Shooter Simulation)
+        const apocCanvas = document.getElementById('canvasApocalypse');
+        const apocCtx = apocCanvas ? apocCanvas.getContext('2d') : null;
+        let apocEnemies = [];
+        let apocBullets = [];
+        let apocTick = 0;
+
+        // D. Card 3: Fire Evacuation Sim (Utility AI Agents Pathfinding to Exit)
+        const fireCanvas = document.getElementById('canvasFireEvac');
+        const fireCtx = fireCanvas ? fireCanvas.getContext('2d') : null;
+        let evacAgents = [];
+
+        function resizeAllCanvases() {
+            resizeHeroCanvas();
+            [miniCanvas, apocCanvas, fireCanvas].forEach(c => {
+                if (!c) return;
+                const r = c.getBoundingClientRect();
+                if (r.width > 0 && r.height > 0) {
+                    const newW = Math.floor(r.width);
+                    const newH = Math.floor(r.height);
+                    if (c.width !== newW || c.height !== newH) {
+                        c.width = newW;
+                        c.height = newH;
+                    }
+                }
+            });
+        }
+
+        function seedSimulationEntities() {
+            spawnHeroBurst(160, 55);
+
+            apocEnemies = [];
+            const aw = (apocCanvas && apocCanvas.width) || 340;
+            const ah = (apocCanvas && apocCanvas.height) || 192;
+            for (let i = 0; i < 18; i++) {
+                apocEnemies.push({
+                    x: Math.random() * aw,
+                    y: Math.random() * ah,
+                    speed: 0.4 + Math.random() * 0.5
+                });
+            }
+
+            evacAgents = [];
+            const fw = (fireCanvas && fireCanvas.width) || 340;
+            const fh = (fireCanvas && fireCanvas.height) || 192;
+            for (let i = 0; i < 20; i++) {
+                evacAgents.push({
+                    x: 30 + Math.random() * Math.max(40, fw - 80),
+                    y: 25 + Math.random() * Math.max(30, fh - 50),
+                    role: i < 3 ? 'rescuer' : 'evacuee'
+                });
+            }
+        }
+
+        function animateAllSimulations() {
+            /* --- 1. HERO CANVAS --- */
+            if (heroCtx && heroCanvas && heroCanvas.width > 0) {
+                heroCtx.fillStyle = '#07080c';
+                heroCtx.fillRect(0, 0, heroCanvas.width, heroCanvas.height);
+                heroCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+                for (let x = 0; x < heroCanvas.width; x += 20) {
+                    heroCtx.beginPath();
+                    heroCtx.moveTo(x, 0);
+                    heroCtx.lineTo(x, heroCanvas.height);
+                    heroCtx.stroke();
+                }
+                for (let i = heroEntities.length - 1; i >= 0; i--) {
+                    const p = heroEntities[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 4 || p.x > heroCanvas.width - 4) p.vx *= -1;
+                    if (p.y < 4 || p.y > heroCanvas.height - 4) p.vy *= -1;
+                    p.life -= 0.4;
+                    heroCtx.fillStyle = p.color;
+                    heroCtx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
+                    if (p.life <= 0) heroEntities.splice(i, 1);
+                }
+                if (heroEntities.length < 12 && Math.random() < 0.05) {
+                    spawnHeroBurst(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height);
+                }
+                heroCtx.fillStyle = '#94a3b8';
+                heroCtx.font = '10px "JetBrains Mono"';
+                heroCtx.fillText(`POOLED ENTITIES: ${heroEntities.length}`, 8, heroCanvas.height - 8);
+            }
+
+            /* --- 2. MINI MOVING BIN-PACKING CANVAS --- */
+            if (miniCtx && miniCanvas && miniCanvas.offsetParent !== null && miniCanvas.width > 0) {
+                miniCtx.fillStyle = '#0b0e17';
+                miniCtx.fillRect(0, 0, miniCanvas.width, miniCanvas.height);
+                const cellSize = 22;
+                const cols = 7;
+                const rows = 4;
+                const startX = Math.floor((miniCanvas.width - cols * cellSize) / 2);
+                const startY = 38;
+
+                miniTimer = (miniTimer + 0.4) % 100;
+                miniCtx.fillStyle = '#1e293b';
+                miniCtx.fillRect(startX, 16, cols * cellSize, 8);
+                miniCtx.fillStyle = miniTimer > 75 ? '#ef4444' : '#00f5d4';
+                miniCtx.fillRect(startX, 16, ((100 - miniTimer) / 100) * (cols * cellSize), 8);
+
+                miniCtx.strokeStyle = '#2e344e';
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        miniCtx.strokeRect(startX + c * cellSize, startY + r * cellSize, cellSize, cellSize);
+                    }
+                }
+
+                if (Math.floor(miniTimer) % 18 === 0 && packedBlocks.length < 8) {
+                    const shape = cargoShapes[packedBlocks.length % cargoShapes.length];
+                    packedBlocks.push({
+                        c: (packedBlocks.length * 2) % (cols - 1),
+                        r: Math.floor(packedBlocks.length / 3) % (rows - 1),
+                        w: shape.w,
+                        h: shape.h,
+                        color: shape.color
+                    });
+                }
+                if (miniTimer > 98) packedBlocks = [];
+
+                packedBlocks.forEach(b => {
+                    miniCtx.fillStyle = b.color;
+                    miniCtx.fillRect(
+                        startX + b.c * cellSize + 2,
+                        startY + b.r * cellSize + 2,
+                        Math.min(b.w, cols - b.c) * cellSize - 4,
+                        Math.min(b.h, rows - b.r) * cellSize - 4
+                    );
+                });
+            }
+
+            /* --- 3. APOCALYPSE GRID TOP-DOWN SHOOTER CANVAS --- */
+            if (apocCtx && apocCanvas && apocCanvas.offsetParent !== null && apocCanvas.width > 0) {
+                apocTick++;
+                apocCtx.fillStyle = '#090b12';
+                apocCtx.fillRect(0, 0, apocCanvas.width, apocCanvas.height);
+
+                apocCtx.strokeStyle = '#1e293b';
+                apocCtx.strokeRect(16, 16, apocCanvas.width / 2 - 20, apocCanvas.height - 32);
+                apocCtx.strokeRect(apocCanvas.width / 2 + 4, 16, apocCanvas.width / 2 - 20, apocCanvas.height - 32);
+
+                const playerX = apocCanvas.width / 2;
+                const playerY = apocCanvas.height / 2;
+
+                if (apocTick % 12 === 0 && apocEnemies.length > 0) {
+                    const target = apocEnemies[apocTick % apocEnemies.length];
+                    const ang = Math.atan2(target.y - playerY, target.x - playerX);
+                    apocBullets.push({
+                        x: playerX,
+                        y: playerY,
+                        vx: Math.cos(ang) * 3.5,
+                        vy: Math.sin(ang) * 3.5
+                    });
+                }
+
+                apocCtx.fillStyle = '#ffb703';
+                for (let i = apocBullets.length - 1; i >= 0; i--) {
+                    const b = apocBullets[i];
+                    b.x += b.vx;
+                    b.y += b.vy;
+                    apocCtx.fillRect(b.x - 2, b.y - 2, 4, 4);
+                    if (b.x < 0 || b.x > apocCanvas.width || b.y < 0 || b.y > apocCanvas.height) {
+                        apocBullets.splice(i, 1);
+                    }
+                }
+
+                apocEnemies.forEach(e => {
+                    const ang = Math.atan2(playerY - e.y, playerX - e.x);
+                    e.x += Math.cos(ang) * e.speed;
+                    e.y += Math.sin(ang) * e.speed;
+                    if (Math.hypot(playerX - e.x, playerY - e.y) < 14) {
+                        e.x = Math.random() < 0.5 ? 10 : apocCanvas.width - 10;
+                        e.y = Math.random() * apocCanvas.height;
+                    }
+                    apocCtx.fillStyle = '#ef4444';
+                    apocCtx.fillRect(e.x - 4, e.y - 4, 8, 8);
+                });
+
+                apocCtx.fillStyle = '#00f5d4';
+                apocCtx.fillRect(playerX - 5, playerY - 5, 10, 10);
+            }
+
+            /* --- 4. FIRE EVACUATION UTILITY AI CANVAS --- */
+            if (fireCtx && fireCanvas && fireCanvas.offsetParent !== null && fireCanvas.width > 0) {
+                fireCtx.fillStyle = '#0b0e17';
+                fireCtx.fillRect(0, 0, fireCanvas.width, fireCanvas.height);
+
+                const fireX = fireCanvas.width * 0.35;
+                const fireY = fireCanvas.height * 0.52;
+                const pulse = 18 + Math.sin(apocTick * 0.1) * 4;
+                fireCtx.fillStyle = 'rgba(239, 68, 68, 0.28)';
+                fireCtx.beginPath();
+                fireCtx.arc(fireX, fireY, pulse + 10, 0, Math.PI * 2);
+                fireCtx.fill();
+                fireCtx.fillStyle = '#ff6b35';
+                fireCtx.beginPath();
+                fireCtx.arc(fireX, fireY, pulse * 0.6, 0, Math.PI * 2);
+                fireCtx.fill();
+
+                const exitX = fireCanvas.width - 24;
+                const exitY = fireCanvas.height / 2;
+                fireCtx.strokeStyle = '#38b000';
+                fireCtx.strokeRect(exitX - 10, exitY - 22, 16, 44);
+
+                evacAgents.forEach(a => {
+                    let vx = 0.7;
+                    let vy = (exitY - a.y) * 0.015;
+                    const distToFire = Math.hypot(a.x - fireX, a.y - fireY);
+                    if (distToFire < 42) {
+                        vy += (a.y < fireY ? -1.2 : 1.2);
+                    }
+                    a.x += vx;
+                    a.y += vy;
+                    if (a.x > exitX - 6) {
+                        a.x = 16;
+                        a.y = 20 + Math.random() * (fireCanvas.height - 40);
+                    }
+                    fireCtx.fillStyle = a.role === 'rescuer' ? '#00f5d4' : '#38b000';
+                    fireCtx.fillRect(a.x - 3, a.y - 3, 6, 6);
+                });
+            }
+
+            requestAnimationFrame(animateAllSimulations);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupModalBackdrops();
+            resizeAllCanvases();
+            seedSimulationEntities();
+            requestAnimationFrame(animateAllSimulations);
+        });
+
+        window.addEventListener('load', () => {
+            resizeAllCanvases();
+        });
+
+        window.addEventListener('resize', () => {
+            resizeAllCanvases();
+        });
+    </script>
+</body>
+</html>
