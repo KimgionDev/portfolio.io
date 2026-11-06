@@ -7,13 +7,10 @@
     <meta name="keywords" content="Unity, Game Development, Gameplay Programmer, Intern, C#, Portfolio, Can Tho University, KimgionDev">
     <meta name="author" content="Nguyen Ngoc Duc Phat">
     <title>NGUYEN NGOC DUC PHAT | KimgionDev — Unity Gameplay Intern Portfolio</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Press Start 2P (Pixel Headings), VT323 (Pixel UI), JetBrains Mono (Code/Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <script>
@@ -53,7 +50,6 @@
             background-image: none;
         }
 
-        /* Subtle CRT Scanline Overlay */
         .crt-overlay {
             pointer-events: none;
             position: fixed;
@@ -67,7 +63,6 @@
             opacity: 0.45;
         }
 
-        /* Retro 8-Bit Box Shadow Border */
         .pixel-box {
             background: #ffffff;
             border: 2px solid #d6d4ce;
@@ -84,7 +79,6 @@
             transform: translate(-2px, -2px);
         }
 
-        /* Retro Menu Button (Like Video 2) */
         .pixel-btn {
             font-family: 'Press Start 2P', monospace;
             font-size: 0.72rem;
@@ -125,7 +119,6 @@
             box-shadow: 6px 6px 0px #1c1c1c;
         }
 
-        /* Skill Pill from Video 2 */
         .skill-pill {
             font-family: 'Press Start 2P', monospace;
             font-size: 0.65rem;
@@ -146,7 +139,6 @@
             box-shadow: 4px 4px 0px rgba(107,107,107, 0.25);
         }
 
-        /* Tool Card with Diagonal Corner Cut like Video 2 */
         .tool-card {
             background: #fafaf8;
             border: 2px solid #d6d4ce;
@@ -160,7 +152,6 @@
             background: #e9e8e4;
         }
 
-        /* Blinking cursor */
         .blink {
             animation: blinkAnim 1s steps(2, start) infinite;
         }
@@ -168,7 +159,6 @@
             to { visibility: hidden; }
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -183,7 +173,6 @@
             background: #1c1c1c;
         }
 
-        /* Portfolio refresh: quieter presentation, clearer project content */
         .crt-overlay { display: none !important; }
         body { background-image: none; }
         .pixel-box { border-radius: 0.75rem !important; box-shadow: 3px 3px 0 #000; }
@@ -193,7 +182,6 @@
         .skill-pill:hover { transform: none; }
         header { border-bottom-width: 1px !important; }
 
-        /* Crisp Rendering for Pixel Art Canvases */
         canvas {
             image-rendering: -moz-crisp-edges;
             image-rendering: -webkit-crisp-edges;
@@ -201,7 +189,6 @@
             image-rendering: crisp-edges;
         }
 
-        /* High Quality Print Styles for Resume / CV */
         @media print {
             body * {
                 visibility: hidden !important;
@@ -247,7 +234,6 @@
             }
         }
 
-        /* Neutral palette refinements */
         .pixel-box:hover { border-color: #8a8780; box-shadow: 3px 3px 0 #000; }
         .pixel-btn:hover { background: #1c1c1c; color: #f5f4f1; border-color: #1c1c1c; }
         .pixel-btn-primary { border-color: #1c1c1c; }
@@ -258,10 +244,8 @@
 </head>
 <body class="selection:bg-pixelOrange selection:text-bgDark">
 
-    <!-- Subtle Retro Scanline Overlay -->
     <div class="crt-overlay" id="crtOverlay"></div>
 
-    <!-- Top Quick Contact Bar (Video 1 Tip: Clear Contact Info on Homepage) -->
     <div class="bg-[#efeeea] border-b border-borderPixel text-xs py-2 px-4">
         <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex flex-wrap items-center gap-4 text-neutral-700">
@@ -288,15 +272,12 @@
         </div>
     </div>
 
-    <!-- Retro Arcade Navbar (Inspired by Video 2) -->
     <header class="sticky top-0 z-50 bg-bgDark/90 backdrop-blur-md border-b-2 border-borderPixel">
         <nav class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
-            <!-- Brand Logo -->
             <a href="#" onmouseenter="playSound('hover')" onclick="playSound('click')" class="font-pixel text-sm sm:text-base text-[#1c1c1c] tracking-wider flex items-center gap-2 hover:text-pixelOrange transition">
                 <span class="text-pixelOrange">&gt;</span>KIMGIONDEV<span class="blink text-pixelCyan">_</span>
             </a>
 
-            <!-- Navigation Links -->
             <div class="hidden lg:flex items-center gap-6 font-pixel text-[10px] tracking-wider text-neutral-700">
                 <a href="#projects" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">PROJECTS</a>
                 <a href="#about" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">ABOUT ME</a>
@@ -305,28 +286,18 @@
                 <a href="#contact" onmouseenter="playSound('hover')" class="hover:text-pixelOrange transition py-1">CONTACT</a>
             </div>
 
-            <!-- Action Controls -->
             <div class="flex items-center gap-2.5">
-                <!-- 8-bit Sound Toggle -->
                 <button id="sfxToggleBtn" onclick="toggleSFX()" class="px-2.5 py-2 rounded bg-bgPanel border border-borderPixel text-xs font-mono text-pixelCyan hover:border-pixelCyan transition flex items-center gap-1.5" title="Toggle 8-Bit Arcade Sound Effects">
                     <i id="sfxIcon" class="fa-solid fa-volume-high"></i>
                     <span id="sfxLabel" class="hidden sm:inline text-[11px]">SFX: ON</span>
                 </button>
 
-                <!-- Guide Button for GitHub.io setup -->
-                <button onclick="openGuideModal()" onmouseenter="playSound('hover')" class="px-2.5 py-2 rounded bg-bgPanel border border-borderPixel text-xs font-mono text-pixelAmber hover:border-pixelAmber transition flex items-center gap-1.5" title="How to upload to GitHub.io">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <span class="hidden md:inline text-[11px]">GITHUB.IO GUIDE</span>
-                </button>
-
-                <!-- Mobile Hamburger Menu Button -->
                 <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded bg-bgPanel border border-borderPixel text-xs font-mono text-neutral-700 hover:text-pixelOrange hover:border-pixelOrange transition flex items-center justify-center w-8 h-8" aria-label="Toggle navigation menu" title="Menu">
                     <i id="mobileMenuIcon" class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </nav>
 
-        <!-- Mobile Navigation Drawer -->
         <div id="mobileMenu" class="hidden lg:hidden border-t border-borderPixel bg-bgDark/98 px-5 py-4 space-y-3 font-pixel text-[10px] tracking-wider text-neutral-700">
             <a href="#projects" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>PROJECTS</a>
             <a href="#about" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-pixelOrange transition"><span class="text-pixelOrange mr-1.5">&gt;</span>ABOUT ME</a>
@@ -336,14 +307,11 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-24 py-10">
 
-        <!-- ================= HERO SECTION ================= -->
         <section class="relative pt-4 pb-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                 
-                <!-- Left Column: Intro & CTAs (Like Video 2 Layout) -->
                 <div class="lg:col-span-7 space-y-6">
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-bgPanel border border-pixelOrange/50 text-pixelOrange text-xs font-mono">
                         <i class="fa-solid fa-graduation-cap"></i>
@@ -366,7 +334,6 @@
                         Software Engineering student at Can Tho University with experience in <span class="text-[#1c1c1c] font-semibold">2D game development using Unity and C#</span>. Hands-on with <span class="text-pixelCyan font-semibold">gameplay systems</span>, <span class="text-pixelAmber">UI state flow</span>, <span class="text-pixelAmber">Utility AI</span>, <span class="text-pixelAmber">Procedural Generation (BSP)</span>, and <span class="text-pixelAmber">ScriptableObject-based data design</span> through academic and personal projects.
                     </p>
 
-                    <!-- Direct Contact Bar inside Hero (Video 1 Tip) -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
                         <button onclick="copyContact('phatbo13579@gmail.com', 'Email')" class="flex items-center gap-2.5 p-2.5 rounded bg-bgPanel/90 border border-borderPixel hover:border-pixelOrange text-left transition group">
                             <span class="w-8 h-8 rounded bg-pixelOrange/15 text-pixelOrange flex items-center justify-center group-hover:bg-pixelOrange group-hover:text-bgDark transition">
@@ -399,7 +366,6 @@
                         </a>
                     </div>
 
-                    <!-- Primary Hero Buttons -->
                     <div class="flex flex-wrap items-center gap-4 pt-2">
                         <a href="#projects" onmouseenter="playSound('hover')" onclick="playSound('click')" class="pixel-btn pixel-btn-primary px-5 py-3.5 rounded">
                             <i class="fa-solid fa-play"></i>
@@ -416,10 +382,8 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Interactive Pixel Avatar + Mini Gameplay Sandbox -->
                 <div class="lg:col-span-5">
                     <div class="pixel-box rounded-xl p-5 relative overflow-hidden">
-                        <!-- Top Window Bar -->
                         <div class="flex items-center justify-between pb-3 mb-4 border-b border-borderPixel">
                             <div class="flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-[#a4503f] inline-block"></span>
@@ -430,38 +394,26 @@
                             <span class="text-[11px] font-mono text-pixelCyan">CTU 2023–2027</span>
                         </div>
 
-                        <!-- Avatar & Factual Student Info Sheet -->
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-                            <!-- Custom SVG 8-Bit Game Dev Avatar -->
                             <div class="sm:col-span-5 flex flex-col items-center">
                                 <div class="w-36 h-36 rounded-xl bg-[#efeeea] border-2 border-pixelOrange p-2 relative group cursor-pointer" onclick="triggerAvatarJump()" title="Click Avatar">
-                                    <!-- SVG Pixel Character -->
                                     <svg id="pixelAvatarSvg" viewBox="0 0 32 32" class="w-full h-full transition-transform duration-200" shape-rendering="crispEdges">
-                                        <!-- Background glow -->
                                         <rect x="2" y="2" width="28" height="28" fill="#fafaf8"/>
-                                        <!-- Hair -->
                                         <rect x="9" y="5" width="14" height="4" fill="#e2e0da"/>
                                         <rect x="8" y="7" width="2" height="6" fill="#e2e0da"/>
                                         <rect x="22" y="7" width="2" height="6" fill="#e2e0da"/>
-                                        <!-- Head / Face -->
                                         <rect x="10" y="9" width="12" height="10" fill="#fbd38d"/>
-                                        <!-- Headset Band -->
                                         <rect x="7" y="6" width="2" height="8" fill="#1c1c1c"/>
                                         <rect x="23" y="6" width="2" height="8" fill="#1c1c1c"/>
                                         <rect x="9" y="4" width="14" height="2" fill="#1c1c1c"/>
-                                        <!-- Glasses & Eyes -->
                                         <rect x="10" y="12" width="5" height="3" fill="#6b6b6b"/>
                                         <rect x="17" y="12" width="5" height="3" fill="#6b6b6b"/>
                                         <rect x="15" y="13" width="2" height="1" fill="#1c1c1c"/>
-                                        <!-- Smile -->
                                         <rect x="14" y="16" width="4" height="1" fill="#7c2d12"/>
-                                        <!-- Hoodie / Torso -->
                                         <rect x="8" y="19" width="16" height="9" fill="#6b6b6b"/>
                                         <rect x="11" y="19" width="10" height="9" fill="#4a4a4a"/>
-                                        <!-- Laptop in front -->
                                         <rect x="10" y="23" width="12" height="6" fill="#6b6b6b"/>
                                         <rect x="11" y="24" width="10" height="4" fill="#171717"/>
-                                        <!-- Unity Logo pixel on laptop -->
                                         <rect x="15" y="25" width="2" height="2" fill="#6b6b6b"/>
                                     </svg>
                                     <div id="avatarFloatingText" class="hidden absolute -top-2 right-2 font-pixel text-[9px] text-pixelAmber bg-bgDark px-1.5 py-0.5 rounded border border-pixelAmber">
@@ -471,7 +423,6 @@
                                 <span class="text-[11px] text-neutral-600 mt-2 font-mono">Click Avatar to Interact</span>
                             </div>
 
-                            <!-- Live RPG Character Stats -->
                             <div class="sm:col-span-7 space-y-2.5 text-xs font-mono">
                                 <div class="flex justify-between items-center border-b border-borderPixel/60 pb-1.5">
                                     <span class="text-neutral-600">ROLE:</span>
@@ -496,7 +447,6 @@
                             </div>
                         </div>
 
-                        <!-- Mini Interactive Gameplay Canvas inside Hero Card -->
                         <div class="mt-4 pt-3 border-t border-borderPixel">
                             <div class="flex justify-between items-center text-[11px] text-neutral-600 mb-1.5">
                                 <span class="font-pixel text-[9px] text-pixelCyan">INTERACTIVE TECHNICAL SKETCH</span>
@@ -512,8 +462,6 @@
             </div>
         </section>
 
-        <!-- ================= FEATURED PROJECTS SECTION ================= -->
-        <!-- Follows Video 1 Tips: 1-3 High Quality Game Examples, Team + Solo, Development Process, Demo Preview -->
         <section id="projects" class="scroll-mt-24 space-y-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-borderPixel pb-4">
                 <div>
@@ -524,7 +472,6 @@
                     <h2 class="font-pixel text-xl sm:text-2xl text-[#1c1c1c]">FEATURED PROJECTS</h2>
                 </div>
 
-                <!-- Project Filter Tabs -->
                 <div class="flex flex-wrap gap-2">
                     <button onclick="filterProjects('all')" id="filter-all" class="filter-btn px-3 py-1.5 rounded font-pixel text-[10px] bg-pixelOrange text-bgDark border border-pixelOrange transition">
                         ALL (3)
@@ -538,17 +485,13 @@
                 </div>
             </div>
 
-            <!-- 3 Featured Game Cards Grid (Styled like Video 2 Featured Projects) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-7" id="featuredProjectsGrid">
 
-                <!-- PROJECT 1: MINI MOVING (TEAM PROJECT) -->
                 <article data-category="team" class="project-card pixel-box rounded-2xl overflow-hidden flex flex-col justify-between">
                     <div>
-                        <!-- Interactive Canvas / GIF Preview Header -->
                         <div class="relative h-48 bg-[#efeeea] border-b border-borderPixel overflow-hidden group">
                             <canvas id="canvasMiniMoving" class="w-full h-full block"></canvas>
                             
-                            <!-- Top Badges -->
                             <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
                                 <span class="px-2.5 py-1 rounded bg-pixelCyan/90 text-bgDark font-pixel text-[9px] font-bold shadow">
                                     <i class="fa-solid fa-users mr-1"></i>TEAM OF 3
@@ -563,7 +506,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Body -->
                         <div class="p-5 space-y-4">
                             <div>
                                 <div class="text-xs font-mono text-pixelOrange mb-1">Gameplay &amp; UI Developer</div>
@@ -574,7 +516,6 @@
                                 A 2D bin-packing mobile puzzle game where players arrange cargo into a truck's grid within a <span class="text-[#1c1c1c] font-medium">"Time-Budget Economy"</span> system.
                             </p>
 
-                            <!-- Development Process Highlights (Video 1 Tip) -->
                             <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-neutral-700">
                                 <div class="font-pixel text-[9px] text-pixelCyan mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
                                 <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
@@ -585,7 +526,6 @@
                                 </ul>
                             </div>
 
-                            <!-- Tech Tags -->
                             <div class="flex flex-wrap gap-1.5 pt-1">
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">C#</span>
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">ScriptableObjects</span>
@@ -595,7 +535,6 @@
                         </div>
                     </div>
 
-                    <!-- Card Footer Buttons -->
                     <div class="p-5 pt-0 grid grid-cols-2 gap-2.5">
                         <button onclick="openProjectModal('minimoving')" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-2.5 rounded text-[10px]">
                             <i class="fa-solid fa-code-branch"></i>
@@ -608,14 +547,11 @@
                     </div>
                 </article>
 
-                <!-- PROJECT 2: APOCALYPSE GRID (SOLO DEVELOPER) -->
                 <article data-category="solo" class="project-card pixel-box rounded-2xl overflow-hidden flex flex-col justify-between">
                     <div>
-                        <!-- Interactive Canvas / GIF Preview Header -->
                         <div class="relative h-48 bg-[#efeeea] border-b border-borderPixel overflow-hidden group">
                             <canvas id="canvasApocalypse" class="w-full h-full block"></canvas>
                             
-                            <!-- Top Badges -->
                             <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
                                 <span class="px-2.5 py-1 rounded bg-pixelOrange text-bgDark font-pixel text-[9px] font-bold shadow">
                                     <i class="fa-solid fa-user-astronaut mr-1"></i>SOLO DEV
@@ -627,7 +563,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Body -->
                         <div class="p-5 space-y-4">
                             <div>
                                 <div class="text-xs font-mono text-pixelCyan mb-1">Solo Gameplay Programmer</div>
@@ -638,7 +573,6 @@
                                 A Rogue-lite 2D Top-Down Shooter featuring <span class="text-[#1c1c1c] font-medium">procedural dungeon generation (BSP)</span> and fast-paced wave survival combat.
                             </p>
 
-                            <!-- Development Process Highlights -->
                             <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-neutral-700">
                                 <div class="font-pixel text-[9px] text-pixelOrange mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
                                 <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
@@ -649,7 +583,6 @@
                                 </ul>
                             </div>
 
-                            <!-- Tech Tags -->
                             <div class="flex flex-wrap gap-1.5 pt-1">
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">BSP Algorithm</span>
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">Object Pooling</span>
@@ -659,7 +592,6 @@
                         </div>
                     </div>
 
-                    <!-- Card Footer Buttons -->
                     <div class="p-5 pt-0 grid grid-cols-3 gap-2">
                         <a href="https://kimgion.itch.io/apocalypse-grid" target="_blank" rel="noopener noreferrer" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-2.5 rounded text-[9px]">
                             <i class="fa-brands fa-itch-io"></i>
@@ -676,14 +608,11 @@
                     </div>
                 </article>
 
-                <!-- PROJECT 3: FIRE EVACUATION SIMULATION (TEAM LEADER & AI DESIGNER) -->
                 <article data-category="team" class="project-card pixel-box rounded-2xl overflow-hidden flex flex-col justify-between">
                     <div>
-                        <!-- Interactive Canvas / GIF Preview Header -->
                         <div class="relative h-48 bg-[#efeeea] border-b border-borderPixel overflow-hidden group">
                             <canvas id="canvasFireEvac" class="w-full h-full block"></canvas>
                             
-                            <!-- Top Badges -->
                             <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
                                 <span class="px-2.5 py-1 rounded bg-pixelPurple text-[#1c1c1c] font-pixel text-[9px] font-bold shadow">
                                     <i class="fa-solid fa-crown mr-1"></i>TEAM LEAD (3)
@@ -698,7 +627,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Body -->
                         <div class="p-5 space-y-4">
                             <div>
                                 <div class="text-xs font-mono text-pixelAmber mb-1">Team Leader &amp; Utility AI Designer</div>
@@ -709,7 +637,6 @@
                                 An Agent-Based Modeling (ABM) emergency evacuation simulation powered by multi-agent <span class="text-[#1c1c1c] font-medium">Utility AI decision matrices</span> and navigation graphs.
                             </p>
 
-                            <!-- Development Process Highlights -->
                             <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-neutral-700">
                                 <div class="font-pixel text-[9px] text-pixelPurple mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
                                 <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
@@ -719,7 +646,6 @@
                                 </ul>
                             </div>
 
-                            <!-- Tech Tags -->
                             <div class="flex flex-wrap gap-1.5 pt-1">
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">Utility AI</span>
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">Pathfinding Graph</span>
@@ -729,7 +655,6 @@
                         </div>
                     </div>
 
-                    <!-- Card Footer Buttons -->
                     <div class="p-5 pt-0 grid grid-cols-2 gap-2.5">
                         <button onclick="openProjectModal('fireevac')" onmouseenter="playSound('hover')" class="pixel-btn pixel-btn-primary py-2.5 rounded text-[10px]">
                             <i class="fa-solid fa-brain"></i>
@@ -744,7 +669,6 @@
 
             </div>
 
-            <!-- Secondary Software Engineering Projects Accordion/Row -->
             <div class="pixel-box rounded-xl p-5 bg-bgPanel/70">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-borderPixel">
                     <div class="flex items-center gap-2.5">
@@ -755,7 +679,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                    <!-- CTU-Scheduler -->
                     <div class="p-4 rounded-lg bg-bgDark border border-borderPixel hover:border-pixelCyan transition flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start gap-2 mb-1">
@@ -778,7 +701,6 @@
                         </div>
                     </div>
 
-                    <!-- VocabMaster -->
                     <div class="p-4 rounded-lg bg-bgDark border border-borderPixel hover:border-pixelAmber transition flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start gap-2 mb-1">
@@ -804,18 +726,15 @@
             </div>
         </section>
 
-        <!-- ================= ABOUT ME & GITHUB STATS SECTION (Inspired by Video 2) ================= -->
         <section id="about" class="scroll-mt-24 space-y-8">
             <div class="text-center space-y-2">
                 <div class="text-pixelOrange font-pixel text-xs">PLAYER BIO // CHARACTER PROFILE</div>
                 <h2 class="font-pixel text-xl sm:text-2xl text-[#1c1c1c]">ABOUT ME</h2>
             </div>
 
-            <!-- Main About Card (Matches Video 2 Rounded Dark Container) -->
             <div class="pixel-box rounded-3xl p-6 sm:p-10 bg-bgPanel">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
-                    <!-- Left Avatar Emblem -->
                     <div class="lg:col-span-4 flex flex-col items-center text-center space-y-3">
                         <div class="w-44 h-44 rounded-full bg-bgDark border-4 border-pixelOrange/80 p-4 flex items-center justify-center shadow-lg relative">
                             <svg viewBox="0 0 32 32" class="w-32 h-32" shape-rendering="crispEdges">
@@ -828,7 +747,6 @@
                                 <rect x="14" y="15" width="4" height="1" fill="#7c2d12"/>
                                 <rect x="7" y="18" width="18" height="10" fill="#1c1c1c"/>
                                 <rect x="10" y="18" width="12" height="10" fill="#e2e0da"/>
-                                <!-- Controller Icon on Shirt -->
                                 <rect x="13" y="21" width="6" height="4" fill="#57534e"/>
                                 <rect x="14" y="22" width="1" height="2" fill="#f5f4f1"/>
                                 <rect x="17" y="22" width="1" height="1" fill="#f5f4f1"/>
@@ -843,7 +761,6 @@
                         </div>
                     </div>
 
-                    <!-- Right Bio Description -->
                     <div class="lg:col-span-8 space-y-4">
                         <h3 class="font-pixel text-base sm:text-lg text-pixelAmber">
                             &gt; SOFTWARE ENGINEERING STUDENT SEEKING UNITY GAMEPLAY INTERNSHIP
@@ -855,7 +772,6 @@
                             My coursework and project work focus on <span class="text-[#1c1c1c]">gameplay systems, UI state flow, Utility AI, procedural dungeon generation (BSP), Object Pooling, and ScriptableObject-based data design</span>. I am seeking a <span class="text-pixelAmber font-semibold">Unity Gameplay Intern</span> position to contribute to gameplay systems and AI behavior in a real production team.
                         </p>
 
-                        <!-- Key Highlights Badges -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
                             <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
                                 <div class="font-pixel text-xs text-pixelOrange">3.56/4.0</div>
@@ -877,7 +793,6 @@
                     </div>
                 </div>
 
-                <!-- Live GitHub Stats (Directly from User's GitHub Profile Markdown) -->
                 <div class="mt-8 pt-6 border-t border-borderPixel">
                     <div class="flex items-center justify-between mb-4">
                         <span class="font-pixel text-xs text-neutral-700 flex items-center gap-2">
@@ -906,17 +821,14 @@
             </div>
         </section>
         
-        <!-- ================= SKILLS & TOOLS SECTION (Strictly synced with CV Skills) ================= -->
         <section id="skills" class="scroll-mt-24 space-y-8">
             <div class="text-center space-y-2">
                 <div class="text-pixelCyan font-pixel text-xs">TECHNICAL SKILLS // FROM RESUME</div>
                 <h2 class="font-pixel text-xl sm:text-2xl text-[#1c1c1c]">SKILLS &amp; TOOLS</h2>
             </div>
 
-            <!-- 5 Exact CV Skill Categories -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 
-                <!-- 1. Game Engine & Languages -->
                 <div class="pixel-box rounded-xl p-5 space-y-3">
                     <h3 class="font-pixel text-xs text-pixelOrange flex items-center gap-2">
                         <i class="fa-brands fa-unity"></i>
@@ -929,7 +841,6 @@
                     </div>
                 </div>
 
-                <!-- 2. Gameplay Programming -->
                 <div class="pixel-box rounded-xl p-5 space-y-3">
                     <h3 class="font-pixel text-xs text-pixelCyan flex items-center gap-2">
                         <i class="fa-solid fa-gamepad"></i>
@@ -943,7 +854,6 @@
                     </div>
                 </div>
 
-                <!-- 3. Architecture & AI -->
                 <div class="pixel-box rounded-xl p-5 space-y-3">
                     <h3 class="font-pixel text-xs text-pixelAmber flex items-center gap-2">
                         <i class="fa-solid fa-brain"></i>
@@ -957,7 +867,6 @@
                     </div>
                 </div>
 
-                <!-- 4. Tools, Platforms & Databases -->
                 <div class="pixel-box rounded-xl p-5 space-y-3">
                     <h3 class="font-pixel text-xs text-pixelGreen flex items-center gap-2">
                         <i class="fa-solid fa-screwdriver-wrench"></i>
@@ -975,7 +884,6 @@
             </div>
         </section>
 
-        <!-- ================= EXPERIENCE & EDUCATION TIMELINE (Video 2 Style Cards with Year Circles) ================= -->
         <section id="experience" class="scroll-mt-24 space-y-12">
             <div class="text-center space-y-2">
                 <div class="text-pixelAmber font-pixel text-xs">QUEST LOG // ACADEMIC &amp; PROJECT TIMELINE</div>
@@ -983,7 +891,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-                <!-- Q2 2026: Apocalypse Grid -->
                 <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
                     <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelAmber flex items-center justify-center font-pixel text-[10px] text-[#1c1c1c] mx-auto -mt-16 mb-3 shadow-lg">
                         Q2 '26
@@ -1001,7 +908,6 @@
                     </div>
                 </div>
 
-                <!-- Sep 2026 - Present: Mini Moving & Fire Evac -->
                 <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
                     <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelGreen flex items-center justify-center font-pixel text-[10px] text-pixelGreen mx-auto -mt-16 mb-3 shadow-lg">
                         NOW
@@ -1019,7 +925,6 @@
                     </div>
                 </div>
 
-                <!-- Q1 2026: VocabMaster & CTU-Scheduler -->
                 <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
                     <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelCyan flex items-center justify-center font-pixel text-[10px] text-[#1c1c1c] mx-auto -mt-16 mb-3 shadow-lg">
                         Q1 '26
@@ -1040,7 +945,6 @@
             </div>
         </section>
 
-        <!-- ================= LET'S CONNECT SECTION (Video 2 Primary/Secondary Menu Layout) ================= -->
         <section id="contact" class="scroll-mt-24 space-y-8 pb-12">
             <div class="text-center space-y-2">
                 <div class="text-pixelOrange font-pixel text-xs">MULTIPLAYER LOBBY // HIRE OR COLLABORATE</div>
@@ -1048,7 +952,6 @@
             </div>
 
             <div class="pixel-box rounded-2xl p-6 sm:p-10 max-w-4xl mx-auto space-y-8">
-                <!-- Primary Actions -->
                 <div class="space-y-3">
                     <div class="font-pixel text-xs text-pixelOrange tracking-wider">PRIMARY:</div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1063,7 +966,6 @@
                     </div>
                 </div>
 
-                <!-- Secondary Actions -->
                 <div class="space-y-3">
                     <div class="font-pixel text-xs text-pixelCyan tracking-wider">SECONDARY:</div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -1086,7 +988,6 @@
 
     </main>
 
-    <!-- FOOTER (Matches Video 2 Outro) -->
     <footer class="border-t-2 border-borderPixel bg-[#ecebe7] py-8 px-4 text-center space-y-3">
         <div class="font-pixel text-xs sm:text-sm text-[#1c1c1c] tracking-wider">
             <span class="text-pixelOrange">&gt;</span> THANKS FOR VISITING MY PORTFOLIO<span class="blink text-pixelCyan">_</span>
@@ -1096,7 +997,6 @@
         </p>
     </footer>
 
-    <!-- ================= INTERACTIVE PROJECT ARCHITECTURE MODAL ================= -->
     <div id="projectModal" class="fixed inset-0 z-50 hidden bg-neutral-900/40 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="pixel-box rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-5 border-2 border-pixelOrange">
             <div class="flex items-center justify-between border-b border-borderPixel pb-3">
@@ -1110,12 +1010,10 @@
             </div>
 
             <div id="modalBody" class="space-y-4 text-xs sm:text-sm text-neutral-800 leading-relaxed">
-                <!-- Populated dynamically via JS -->
             </div>
         </div>
     </div>
 
-    <!-- ================= INTERACTIVE RESUME / CV VIEWER & DOWNLOAD MODAL ================= -->
     <div id="cvModal" class="fixed inset-0 z-50 hidden bg-neutral-900/40 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="pixel-box rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-5 border-2 border-pixelCyan">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-borderPixel pb-4">
@@ -1138,7 +1036,6 @@
                 </div>
             </div>
 
-            <!-- Full Formatted Resume Content inside Modal -->
             <div class="bg-bgDark border border-borderPixel rounded-xl p-5 space-y-5 text-xs leading-relaxed font-mono">
                 <div class="flex flex-col sm:flex-row justify-between gap-2 border-b border-borderPixel pb-3">
                     <div>
@@ -1260,42 +1157,6 @@
         </div>
     </div>
 
-    <!-- ================= GITHUB.IO DEPLOYMENT & GIF REPLACEMENT GUIDE MODAL ================= -->
-    <div id="guideModal" class="fixed inset-0 z-50 hidden bg-neutral-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="pixel-box rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-4 border-2 border-pixelAmber">
-            <div class="flex items-center justify-between border-b border-borderPixel pb-3">
-                <h3 class="font-pixel text-xs sm:text-sm text-pixelAmber flex items-center gap-2">
-                    <i class="fa-brands fa-github"></i>
-                    <span>HƯỚNG DẪN ĐẨY LÊN KIMGIONDEV.GITHUB.IO</span>
-                </h3>
-                <button onclick="closeGuideModal()" class="px-3 py-1 rounded bg-bgDark border border-borderPixel text-neutral-700 hover:text-pixelOrange font-pixel text-xs">
-                    [X]
-                </button>
-            </div>
-
-            <div class="space-y-4 text-xs sm:text-sm text-neutral-800 leading-relaxed">
-                <div class="p-3.5 rounded-lg bg-bgDark border border-borderPixel space-y-1.5">
-                    <div class="font-bold text-pixelCyan">Bước 1: Tạo Repository GitHub Pages</div>
-                    <p>1. Vào GitHub của bạn (<code class="text-pixelAmber">github.com/KimgionDev</code>) &rarr; bấm <strong>New Repository</strong>.</p>
-                    <p>2. Đặt tên chính xác là: <code class="px-1.5 py-0.5 rounded bg-bgPanel text-pixelGreen font-bold">KimgionDev.github.io</code> (để ở chế độ Public).</p>
-                    <p>3. Upload file <code class="text-[#1c1c1c]">index.html</code> này và file CV <code class="text-[#1c1c1c]">NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf</code> vào cùng thư mục gốc.</p>
-                </div>
-
-                <div class="p-3.5 rounded-lg bg-bgDark border border-borderPixel space-y-1.5">
-                    <div class="font-bold text-pixelOrange">Bước 2: Thay ảnh GIF hoặc Video Trailer thật (Tùy chọn)</div>
-                    <p>Hiện tại mình đã lập trình sẵn <strong>3 mô phỏng HTML5 Canvas trực tiếp</strong> cho <em>Mini Moving</em>, <em>Apocalypse Grid</em> và <em>Fire Evacuation Sim</em> để web của bạn sống động ngay lập tức.</p>
-                    <p>Khi bạn có file <code class="text-pixelAmber">minimoving.gif</code> hoặc <code class="text-pixelAmber">apocalypse.gif</code>, bạn chỉ cần bỏ vào cùng thư mục và thay thẻ <code class="text-pixelCyan">&lt;canvas id="canvasMiniMoving"&gt;</code> bằng <code class="text-pixelCyan">&lt;img src="minimoving.gif" class="w-full h-full object-cover"&gt;</code>.</p>
-                </div>
-
-                <div class="p-3.5 rounded-lg bg-bgDark border border-borderPixel space-y-1.5">
-                    <div class="font-bold text-pixelGreen">Bước 3: Gắn link vào CV và GitHub Profile</div>
-                    <p>Sau 1 phút, trang web của bạn sẽ chạy tại: <code class="text-pixelGreen font-bold">https://kimgiondev.github.io</code>!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RETRO TOAST NOTIFICATION -->
     <div id="toastNotification" class="fixed bottom-5 right-5 z-50 hidden pixel-box bg-bgDark border-2 border-pixelGreen px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
         <span class="w-8 h-8 rounded bg-pixelGreen/20 text-pixelGreen flex items-center justify-center font-pixel text-xs">
             +XP
@@ -1306,11 +1167,7 @@
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT LOGIC & LIVE GAMEPLAY SIMULATIONS ================= -->
     <script>
-        /* -----------------------------------------------------------
-         * 1. RETRO 8-BIT WEB AUDIO SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
-         * ----------------------------------------------------------- */
         let sfxEnabled = true;
         let audioCtx = null;
 
@@ -1377,7 +1234,6 @@
                     osc.stop(now + 0.22);
                 }
             } catch (e) {
-                // Ignore audio errors if blocked by browser autoplay policy
             }
         }
 
@@ -1395,9 +1251,6 @@
             }
         }
 
-        /* -----------------------------------------------------------
-         * 2. CLIPBOARD COPY & RETRO TOAST NOTIFICATION
-         * ----------------------------------------------------------- */
         let toastTimeout = null;
         function copyContact(value, label) {
             playSound('powerup');
@@ -1435,9 +1288,6 @@
             document.body.removeChild(tempInput);
         }
 
-        /* -----------------------------------------------------------
-         * 3. AVATAR INTERACTION, MOBILE MENU & PROJECT FILTERING
-         * ----------------------------------------------------------- */
         let jumpTimeout = null;
         let badgeTimeout = null;
         function triggerAvatarJump() {
@@ -1498,9 +1348,6 @@
             });
         }
 
-        /* -----------------------------------------------------------
-         * 4. MODALS (PROJECT ARCHITECTURE, CV VIEWER, GITHUB GUIDE)
-         * ----------------------------------------------------------- */
         const projectDetails = {
             minimoving: {
                 title: 'MINI MOVING — ARCHITECTURE & DEV PROCESS',
@@ -1597,21 +1444,10 @@
             document.getElementById('cvModal').classList.add('hidden');
         }
 
-        function openGuideModal() {
-            playSound('click');
-            document.getElementById('guideModal').classList.remove('hidden');
-        }
-
-        function closeGuideModal() {
-            playSound('hover');
-            document.getElementById('guideModal').classList.add('hidden');
-        }
-
         function setupModalBackdrops() {
             const modals = [
                 { id: 'projectModal', close: closeProjectModal },
-                { id: 'cvModal', close: closeCVModal },
-                { id: 'guideModal', close: closeGuideModal }
+                { id: 'cvModal', close: closeCVModal }
             ];
             modals.forEach(({ id, close }) => {
                 const modal = document.getElementById(id);
@@ -1629,14 +1465,9 @@
             if (e.key === 'Escape') {
                 closeProjectModal();
                 closeCVModal();
-                closeGuideModal();
             }
         });
 
-        /* -----------------------------------------------------------
-         * 5. LIVE INTERACTIVE GAMEPLAY CANVASES (HERO + 3 CARDS)
-         * ----------------------------------------------------------- */
-        // A. Hero Object-Pooling Particle Sandbox
         const heroCanvas = document.getElementById('heroSimCanvas');
         const heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
         let heroEntities = [];
@@ -1687,7 +1518,6 @@
             }, { passive: true });
         }
 
-        // B. Card 1: Mini Moving (2D Cargo Grid Bin-Packing Simulation)
         const miniCanvas = document.getElementById('canvasMiniMoving');
         const miniCtx = miniCanvas ? miniCanvas.getContext('2d') : null;
         const cargoShapes = [
@@ -1699,15 +1529,14 @@
         ];
         let packedBlocks = [];
         let miniTimer = 0;
+        let miniLastStep = -1;
 
-        // C. Card 2: Apocalypse Grid (BSP Rooms + Top-Down Shooter Simulation)
         const apocCanvas = document.getElementById('canvasApocalypse');
         const apocCtx = apocCanvas ? apocCanvas.getContext('2d') : null;
         let apocEnemies = [];
         let apocBullets = [];
         let apocTick = 0;
 
-        // D. Card 3: Fire Evacuation Sim (Utility AI Agents Pathfinding to Exit)
         const fireCanvas = document.getElementById('canvasFireEvac');
         const fireCtx = fireCanvas ? fireCanvas.getContext('2d') : null;
         let evacAgents = [];
@@ -1754,7 +1583,6 @@
             }
         }
 
-        /* ---- Apocalypse Grid card: procedural BSP level generation (top-down) ---- */
         const apocRi = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
         let apocGen = null;
         function apocGenReset(cols, rows) {
@@ -1870,7 +1698,6 @@
         }
 
         function animateAllSimulations() {
-            /* --- 1. HERO CANVAS --- */
             if (heroCtx && heroCanvas && heroCanvas.width > 0) {
                 heroCtx.fillStyle = '#ecebe7';
                 heroCtx.fillRect(0, 0, heroCanvas.width, heroCanvas.height);
@@ -1900,7 +1727,6 @@
                 heroCtx.fillText(`POOLED ENTITIES: ${heroEntities.length}`, 8, heroCanvas.height - 8);
             }
 
-            /* --- 2. MINI MOVING BIN-PACKING CANVAS --- */
             if (miniCtx && miniCanvas && miniCanvas.offsetParent !== null && miniCanvas.width > 0) {
                 miniCtx.fillStyle = '#efeeea';
                 miniCtx.fillRect(0, 0, miniCanvas.width, miniCanvas.height);
@@ -1908,13 +1734,13 @@
                 const cols = 7;
                 const rows = 4;
                 const startX = Math.floor((miniCanvas.width - cols * cellSize) / 2);
-                const startY = 38;
+                const startY = 62;
 
                 miniTimer = (miniTimer + 0.4) % 100;
                 miniCtx.fillStyle = '#e2e0da';
-                miniCtx.fillRect(startX, 16, cols * cellSize, 8);
+                miniCtx.fillRect(startX, 46, cols * cellSize, 8);
                 miniCtx.fillStyle = miniTimer > 75 ? '#a4503f' : '#6b6b6b';
-                miniCtx.fillRect(startX, 16, ((100 - miniTimer) / 100) * (cols * cellSize), 8);
+                miniCtx.fillRect(startX, 46, ((100 - miniTimer) / 100) * (cols * cellSize), 8);
 
                 miniCtx.strokeStyle = '#d6d4ce';
                 for (let r = 0; r < rows; r++) {
@@ -1923,30 +1749,39 @@
                     }
                 }
 
-                if (Math.floor(miniTimer) % 18 === 0 && packedBlocks.length < 8) {
-                    const shape = cargoShapes[packedBlocks.length % cargoShapes.length];
-                    packedBlocks.push({
-                        c: (packedBlocks.length * 2) % (cols - 1),
-                        r: Math.floor(packedBlocks.length / 3) % (rows - 1),
-                        w: shape.w,
-                        h: shape.h,
-                        color: shape.color
+                const miniStep = Math.floor(miniTimer / 18);
+                if (miniStep !== miniLastStep) {
+                    miniLastStep = miniStep;
+                    const occ = Array.from({ length: rows }, () => Array(cols).fill(false));
+                    packedBlocks.forEach(p => {
+                        for (let y = p.r; y < p.r + p.h; y++) for (let x = p.c; x < p.c + p.w; x++) occ[y][x] = true;
                     });
+                    const fits = (sh, r, c) => {
+                        if (r + sh.h > rows || c + sh.w > cols) return false;
+                        for (let y = r; y < r + sh.h; y++) for (let x = c; x < c + sh.w; x++) if (occ[y][x]) return false;
+                        return true;
+                    };
+                    placing:
+                    for (let k = 0; k < cargoShapes.length; k++) {
+                        const sh = cargoShapes[(packedBlocks.length + k) % cargoShapes.length];
+                        for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+                            if (fits(sh, r, c)) { packedBlocks.push({ c, r, w: sh.w, h: sh.h, color: sh.color }); break placing; }
+                        }
+                    }
                 }
-                if (miniTimer > 98) packedBlocks = [];
+                if (miniTimer > 98) { packedBlocks = []; miniLastStep = -1; }
 
                 packedBlocks.forEach(b => {
                     miniCtx.fillStyle = b.color;
                     miniCtx.fillRect(
                         startX + b.c * cellSize + 2,
                         startY + b.r * cellSize + 2,
-                        Math.min(b.w, cols - b.c) * cellSize - 4,
-                        Math.min(b.h, rows - b.r) * cellSize - 4
+                        b.w * cellSize - 4,
+                        b.h * cellSize - 4
                     );
                 });
             }
 
-            /* --- 3. APOCALYPSE GRID: PROCEDURAL LEVEL GENERATION --- */
             if (apocCtx && apocCanvas && apocCanvas.offsetParent !== null && apocCanvas.width > 0) {
                 apocTick++;
                 const cs = 8;
@@ -1957,7 +1792,6 @@
                 apocGenDraw(apocCtx, apocGen, apocCanvas.width, apocCanvas.height, cs);
             }
 
-            /* --- 4. FIRE EVACUATION UTILITY AI CANVAS --- */
             if (fireCtx && fireCanvas && fireCanvas.offsetParent !== null && fireCanvas.width > 0) {
                 fireCtx.fillStyle = '#efeeea';
                 fireCtx.fillRect(0, 0, fireCanvas.width, fireCanvas.height);
