@@ -189,51 +189,6 @@
             image-rendering: crisp-edges;
         }
 
-        @media print {
-            body * {
-                visibility: hidden !important;
-            }
-            #cvModal, #cvModal * {
-                visibility: visible !important;
-            }
-            #cvModal {
-                position: absolute !important;
-                inset: 0 !important;
-                background: #ffffff !important;
-                color: #000000 !important;
-                padding: 0 !important;
-                overflow: visible !important;
-                z-index: 99999 !important;
-                display: block !important;
-            }
-            #cvModal .pixel-box {
-                border: none !important;
-                box-shadow: none !important;
-                background: #ffffff !important;
-                max-width: 100% !important;
-                padding: 0 !important;
-            }
-            #cvModal button, #cvModal a.pixel-btn {
-                display: none !important;
-            }
-            #cvModal .bg-bgDark, #cvModal .bg-bgPanel {
-                background: #ffffff !important;
-                color: #171717 !important;
-                border-color: #d4d4d4 !important;
-            }
-            #cvModal .text-white, #cvModal .text-neutral-300, #cvModal .text-neutral-200, #cvModal .text-neutral-400 {
-                color: #2a2a2a !important;
-            }
-            #cvModal .text-pixelOrange, #cvModal .text-pixelAmber, #cvModal .text-pixelCyan, #cvModal .text-pixelGreen, #cvModal .text-pixelPurple {
-                color: #171717 !important;
-                font-weight: bold !important;
-            }
-            #cvModal a {
-                color: #404040 !important;
-                text-decoration: underline !important;
-            }
-        }
-
         .pixel-box:hover { border-color: #8a8780; box-shadow: 3px 3px 0 #000; }
         .pixel-btn:hover { background: #1c1c1c; color: #f5f4f1; border-color: #1c1c1c; }
         .pixel-btn-primary { border-color: #1c1c1c; }
@@ -1007,18 +962,14 @@
         <div class="pixel-box rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-bgPanel p-6 space-y-5 border-2 border-pixelCyan">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-borderPixel pb-4">
                 <div>
-                    <span class="text-[10px] font-pixel text-pixelCyan">OFFICIAL RESUME // NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf</span>
+                    <span class="text-[10px] font-pixel text-pixelCyan">OFFICIAL RESUME // NGUYEN-NGOC-DUC-PHAT-CV.pdf</span>
                     <h3 class="font-pixel text-sm sm:text-base text-[#1c1c1c] mt-1">NGUYEN NGOC DUC PHAT — UNITY DEVELOPER INTERN</h3>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf" download="NGUYEN-NGOC-DUC-PHAT-CV-v2.pdf" target="_blank" class="pixel-btn pixel-btn-primary px-3 py-2 rounded text-[10px]">
+                    <a href="NGUYEN-NGOC-DUC-PHAT-CV.pdf" download="NGUYEN-NGOC-DUC-PHAT-CV.pdf" target="_blank" class="pixel-btn pixel-btn-primary px-3 py-2 rounded text-[10px]">
                         <i class="fa-solid fa-download"></i>
                         <span>DOWNLOAD PDF</span>
                     </a>
-                    <button onclick="window.print()" class="pixel-btn px-3 py-2 rounded text-[10px] text-[#1c1c1c]">
-                        <i class="fa-solid fa-print"></i>
-                        <span>PRINT</span>
-                    </button>
                     <button onclick="closeCVModal()" class="px-3 py-2 rounded bg-bgDark border border-borderPixel text-neutral-700 hover:text-pixelOrange font-pixel text-xs">
                         [X]
                     </button>
