@@ -195,6 +195,70 @@
         .pixel-btn-primary:hover { background: #1c1c1c; border-color: #1c1c1c; box-shadow: 4px 4px 0 #000; }
         .skill-pill:hover { border-color: #8a8780; color: #1c1c1c; box-shadow: none; }
         .tool-card:hover { border-color: #8a8780; }
+        .project-conveyor { position: relative; height: 104px; overflow: hidden; background: #efeeea; }
+        .conveyor-belt {
+            position: absolute;
+            inset: auto 0 12px;
+            height: 24px;
+            border-block: 3px solid #3e3c36;
+            background: repeating-linear-gradient(90deg, #77736a 0 17px, #5a574f 17px 20px);
+            animation: belt-roll 700ms linear infinite;
+        }
+        .conveyor-lane { position: absolute; inset: 0 10px 32px; }
+        .conveyor-cargo { position: absolute; bottom: 0; left: 0; animation: box-travel 6s linear infinite; }
+        .conveyor-cargo:has(:focus-visible) { animation-play-state: paused; }
+        .conveyor-box {
+            width: 64px;
+            height: 50px;
+            border: 2px solid #513b27;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #c28b56 0 42%, #e8c297 42% 58%, #c28b56 58%);
+            box-shadow: inset 0 -5px #9c703f, 2px 2px #513b27;
+            color: #302010;
+            touch-action: manipulation;
+        }
+        .conveyor-box[data-taps="2"] { border-style: dashed; }
+        .conveyor-box:focus-visible { outline: 2px solid #1c1c1c; outline-offset: 3px; }
+        .conveyor-box[aria-disabled="true"] { opacity: 0; pointer-events: none; }
+        .conveyor-effect { position: absolute; z-index: 1; pointer-events: none; }
+        .conveyor-card { display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: start; }
+        .conveyor-badge {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border: 1px solid #b9a68c;
+            border-radius: 4px;
+            background: #efe5d6;
+            color: #573a25;
+            overflow: hidden;
+        }
+        .conveyor-badge img { width: 100%; height: 100%; object-fit: contain; }
+        .conveyor-card > div:last-child { min-width: 0; overflow-wrap: anywhere; }
+        .conveyor-facts { display: grid; gap: 4px; margin-top: 6px; }
+        .conveyor-facts:empty, .conveyor-actions:empty { display: none; }
+        .conveyor-facts dt { display: inline; font-weight: 700; margin-right: 6px; }
+        .conveyor-facts dd { display: inline; }
+        .conveyor-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .conveyor-action {
+            padding: 4px 8px;
+            border: 1px solid #b9a68c;
+            border-radius: 4px;
+            color: #573a25;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .conveyor-action:hover { background: #efe5d6; }
+        .conveyor-label { display: block; color: #725239; font-size: 10px; letter-spacing: 0.08em; }
+        .conveyor-crate-piece { background: #bd8953; border: 2px solid #513b27; border-radius: 2px; }
+        .conveyor-box[data-taps="1"] { filter: brightness(1.09); }
+        .conveyor-box[data-taps="2"] { filter: brightness(1.2); box-shadow: inset 0 0 0 2px #a8703e, 2px 2px #513b27; }
+        @keyframes belt-roll { to { background-position: 20px 0; } }
+        @keyframes box-travel { to { left: calc(100% - 64px); } }
+        @media (prefers-reduced-motion: reduce) {
+            .conveyor-belt, .conveyor-cargo { animation: none; }
+            .conveyor-cargo { left: calc(50% - 32px); }
+        }
     </style>
 </head>
 <body class="selection:bg-pixelOrange selection:text-bgDark">
@@ -378,13 +442,30 @@
                         </div>
 
                         <div class="mt-4 pt-3 border-t border-borderPixel">
-                            <div class="flex justify-between items-center text-[11px] text-neutral-600 mb-1.5">
-                                <span class="font-pixel text-[9px] text-pixelCyan">INTERACTIVE TECHNICAL SKETCH</span>
-                                <button onclick="spawnHeroBurst()" class="text-pixelOrange hover:underline font-mono text-[11px]">
-                                    Click to spawn particles
-                                </button>
+                            <div class="flex flex-wrap justify-between items-center gap-1 text-[11px] text-neutral-600 mb-1.5">
+                                <span class="font-pixel text-[9px] text-pixelCyan">PROJECT CONVEYOR</span>
+                                <span class="font-mono">Tap 3 times to reveal portfolio details</span>
                             </div>
-                            <canvas id="heroSimCanvas" class="w-full h-28 rounded bg-[#ecebe7] border border-borderPixel cursor-crosshair"></canvas>
+                            <div id="projectConveyor" class="project-conveyor rounded border border-borderPixel">
+                                <div class="conveyor-belt" aria-hidden="true"></div>
+                                <div class="conveyor-lane">
+                                    <div class="conveyor-cargo">
+                                        <button type="button" id="conveyorBox" class="conveyor-box font-mono text-xs font-bold" data-taps="0" aria-label="Open a box, 0 of 3 taps">0 / 3</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="conveyorCard" class="conveyor-card mt-2 rounded border border-borderPixel bg-bgPanel px-3 py-2">
+                                <div id="conveyorBadge" class="conveyor-badge" aria-hidden="true"><i class="fa-solid fa-box"></i></div>
+                                <div>
+                                    <div role="status" class="text-xs text-neutral-700">
+                                        <span id="conveyorLabel" class="conveyor-label font-mono">PROJECTS &amp; PROFILE</span>
+                                        <strong id="conveyorTitle" class="block text-sm">Open the first box</strong>
+                                        <p id="conveyorSummary">Discover projects, profile details, skills, and contact links.</p>
+                                    </div>
+                                    <dl id="conveyorFacts" class="conveyor-facts text-xs text-neutral-700"></dl>
+                                    <div id="conveyorActions" class="conveyor-actions"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -998,6 +1079,17 @@
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
                     osc.start(now);
                     osc.stop(now + 0.12);
+                } else if (type === 'crate-tap' || type === 'crate-crack' || type === 'crate-open') {
+                    const opening = type === 'crate-open';
+                    const frequency = opening ? 230 : type === 'crate-crack' ? 340 : 210;
+                    const duration = opening ? 0.24 : 0.09;
+                    osc.type = opening ? 'triangle' : 'square';
+                    osc.frequency.setValueAtTime(frequency, now);
+                    osc.frequency.exponentialRampToValueAtTime(opening ? 760 : 85, now + duration * 0.55);
+                    gain.gain.setValueAtTime(opening ? 0.16 : 0.055, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                    osc.start(now);
+                    osc.stop(now + duration);
                 } else if (type === 'powerup') {
                     osc.type = 'square';
                     osc.frequency.setValueAtTime(330, now);
@@ -1224,54 +1316,228 @@
             }
         });
 
-        const heroCanvas = document.getElementById('heroSimCanvas');
-        const heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
-        let heroEntities = [];
-
-        function resizeHeroCanvas() {
-            if (!heroCanvas) return;
-            const rect = heroCanvas.getBoundingClientRect();
-            if (rect.width > 0) {
-                heroCanvas.width = Math.floor(rect.width);
-                heroCanvas.height = Math.floor(rect.height || 112);
+        const conveyor = document.getElementById('projectConveyor');
+        const conveyorBox = document.getElementById('conveyorBox');
+        const conveyorCard = document.getElementById('conveyorCard');
+        const conveyorBadge = document.getElementById('conveyorBadge');
+        const conveyorLabel = document.getElementById('conveyorLabel');
+        const conveyorTitle = document.getElementById('conveyorTitle');
+        const conveyorSummary = document.getElementById('conveyorSummary');
+        const conveyorFacts = document.getElementById('conveyorFacts');
+        const conveyorActions = document.getElementById('conveyorActions');
+        const conveyorItems = [
+            {
+                label: 'PROJECT', name: 'Apocalypse Grid', icon: 'fa-key',
+                summary: 'A solo Unity shooter with procedurally generated dungeons.',
+                links: [
+                    { text: 'Play demo', href: 'https://kimgion.itch.io/apocalypse-grid', newTab: true },
+                    { text: 'Source', href: 'https://github.com/KimgionDev/Apocalypse-Grid', newTab: true }
+                ],
+                project: 'apocalypse'
+            },
+            {
+                label: 'PROFILE', name: 'Nguyen Ngoc Duc Phat', avatar: true,
+                summary: 'I enjoy working on 2D indie games and programming gameplay systems.',
+                facts: [
+                    ['Education', 'Software Engineering · Can Tho University · Fourth-year student'],
+                    ['Graduation', 'Expected in 2027'],
+                    ['GPA', '3.56 / 4.00'],
+                    ['Location', 'Can Tho, Vietnam'],
+                    ['Role', 'Unity / Gameplay Developer'],
+                    ['Status', 'Seeking a Unity game development internship'],
+                    ['Languages', 'English (basic) · Japanese (studying N5)']
+                ],
+                links: [{ text: 'About me', href: '#about' }]
+            },
+            {
+                label: 'CONTACT', name: 'Get in touch', icon: 'fa-address-card',
+                summary: 'Email, phone / Zalo, and GitHub.',
+                links: [
+                    { text: 'phatbo13579@gmail.com', href: 'mailto:phatbo13579@gmail.com' },
+                    { text: '0836663188', href: 'tel:+84836663188' },
+                    { text: 'GitHub @KimgionDev', href: 'https://github.com/KimgionDev', newTab: true }
+                ]
+            },
+            {
+                label: 'SKILLS & TOOLS', name: 'What I work with', icon: 'fa-screwdriver-wrench',
+                facts: [
+                    ['Engines & languages', 'Unity 2D, C#, GAML (GAMA)'],
+                    ['Gameplay', 'Singleton, object pooling, state machines, grid-based systems'],
+                    ['Architecture & AI', 'MVC / MVVM, Utility AI, BSP, agent-based modeling'],
+                    ['Tools', 'Git, GitHub pull requests, CodeRabbit, Antigravity, Codex'],
+                    ['.NET & databases', '.NET, SQL Server, MySQL'],
+                    ['Exploring', 'LLM integration in Unity']
+                ],
+                links: [{ text: 'Skills section', href: '#skills' }]
+            },
+            {
+                label: 'CV', name: 'My CV', icon: 'fa-file-pdf',
+                summary: 'Education, skills, and project experience for Unity development internships.',
+                links: [{ text: 'View CV (PDF)', href: 'NGUYEN-NGOC-DUC-PHAT-CV.pdf', newTab: true }]
+            },
+            {
+                label: 'PROJECT', name: 'Mini Moving', icon: 'fa-box',
+                summary: 'A team-built mobile puzzle about fitting cargo into a truck.',
+                links: [{ text: 'Source', href: 'https://github.com/Atus229/CT239_ProjectGame', newTab: true }],
+                project: 'minimoving'
+            },
+            {
+                label: 'PROJECT', name: 'Fire Evacuation Simulation', icon: 'fa-person-running',
+                summary: 'An agent-based simulation of emergency fire evacuation.',
+                links: [{ text: 'Source', href: 'https://github.com/KimgionDev/fire-evac-sim', newTab: true }],
+                project: 'fireevac'
+            },
+            {
+                label: 'PROJECT', name: 'CTU-Scheduler', icon: 'fa-calendar-days',
+                summary: 'A timetable tool with a timeline view and Excel export.',
+                links: [{ text: 'Source', href: 'https://github.com/d3nhatv0lam/CTU-Scheduler', newTab: true }]
+            },
+            {
+                label: 'PROJECT', name: 'VocabMaster', icon: 'fa-book',
+                summary: 'A C# WinForms vocabulary app with flashcards, quizzes, and progress charts.',
+                links: [{ text: 'Source', href: 'https://github.com/KimgionDev/VocabMaster-Winform', newTab: true }]
             }
+        ];
+        const conveyorReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let nextConveyorItem = 0;
+        let conveyorTaps = 0;
+
+        function createConveyorBadge(item) {
+            const badge = document.createElement(item.avatar ? 'img' : 'i');
+            if (item.avatar) {
+                badge.src = 'avatar.png';
+                badge.alt = '';
+            } else {
+                badge.className = 'fa-solid ' + item.icon;
+            }
+            return badge;
         }
 
-        function spawnHeroBurst(cx, cy) {
-            playSound('click');
-            if (!heroCanvas) return;
-            const x = cx !== undefined ? cx : heroCanvas.width / 2;
-            const y = cy !== undefined ? cy : heroCanvas.height / 2;
-            const colors = ['#1c1c1c', '#6b6b6b', '#57534e', '#5f6b5c'];
-            for (let i = 0; i < 14; i++) {
-                const angle = (Math.PI * 2 * i) / 14 + Math.random() * 0.3;
-                const speed = 1 + Math.random() * 2.2;
-                heroEntities.push({
-                    x, y,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed,
-                    size: 4 + Math.floor(Math.random() * 4),
-                    color: colors[i % colors.length],
-                    life: 90
-                });
-            }
-            if (heroEntities.length > 120) {
-                heroEntities.splice(0, heroEntities.length - 120);
-            }
-        }
+        function playConveyorBurst(item) {
+            if (conveyorReducedMotion.matches) return;
+            const track = conveyor.getBoundingClientRect();
+            const box = conveyorBox.getBoundingClientRect();
+            const x = box.left + box.width / 2 - track.left;
+            const y = box.top + box.height / 2 - track.top;
+            const flash = conveyor.animate([
+                { backgroundColor: '#fff5d6' },
+                { backgroundColor: '#efeeea' }
+            ], 300);
+            flash.onfinish = () => flash.cancel();
 
-        if (heroCanvas) {
-            heroCanvas.addEventListener('mousedown', (e) => {
-                const rect = heroCanvas.getBoundingClientRect();
-                spawnHeroBurst(e.clientX - rect.left, e.clientY - rect.top);
-            });
-            heroCanvas.addEventListener('touchstart', (e) => {
-                const rect = heroCanvas.getBoundingClientRect();
-                const touch = e.touches[0];
-                if (touch) {
-                    spawnHeroBurst(touch.clientX - rect.left, touch.clientY - rect.top);
+            for (let i = 0; i < 21; i++) {
+                const angle = i * 2.4;
+                const isLid = i < 2;
+                const isBadge = i === 20;
+                const direction = i === 0 ? -1 : 1;
+                const dx = isBadge ? 0 : isLid ? direction * 52 : Math.cos(angle) * (26 + i * 2);
+                const dy = isBadge ? -32 : isLid ? -38 : Math.sin(angle) * 20 - 22;
+                const rotation = isBadge ? 0 : (i % 2 ? -1 : 1) * (65 + i * 7);
+                const piece = document.createElement('span');
+                piece.className = 'conveyor-effect';
+                piece.setAttribute('aria-hidden', 'true');
+                piece.style.left = x + 'px';
+                piece.style.top = y + 'px';
+                if (isBadge) {
+                    piece.classList.add('conveyor-badge');
+                    piece.append(createConveyorBadge(item));
+                } else {
+                    piece.style.width = isLid ? '29px' : (4 + i % 5) + 'px';
+                    piece.style.height = isLid ? '12px' : (4 + i % 5) + 'px';
+                    if (isLid) piece.classList.add('conveyor-crate-piece');
+                    else piece.style.backgroundColor = ['#754622', '#b77d42', '#e8b873', '#ffe6a5'][i % 4];
                 }
-            }, { passive: true });
+                conveyor.append(piece);
+                const animation = piece.animate([
+                    { transform: 'translate(-50%, -50%) scale(0.15)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rotation}deg) scale(1.12)`, opacity: 1, offset: 0.45 },
+                    { transform: `translate(calc(-50% + ${dx * 1.18}px), calc(-50% + ${dy + 22}px)) rotate(${rotation * 1.4}deg)`, opacity: 0 }
+                ], { duration: isBadge ? 760 : 490 + (i % 4) * 55, easing: 'ease-out' });
+                animation.onfinish = () => piece.remove();
+            }
+        }
+
+        function updateConveyorBox() {
+            conveyorBox.dataset.taps = conveyorTaps;
+            conveyorBox.textContent = conveyorTaps + ' / 3';
+            conveyorBox.setAttribute('aria-label', 'Open a box, ' + conveyorTaps + ' of 3 taps');
+        }
+
+        conveyorBox.addEventListener('click', () => {
+            if (conveyorTaps === 3) return;
+            conveyorTaps++;
+            updateConveyorBox();
+            if (conveyorTaps < 3) {
+                playSound(conveyorTaps === 1 ? 'crate-tap' : 'crate-crack');
+                if (!conveyorReducedMotion.matches) {
+                    const hit = conveyorTaps === 1 ? 4 : 8;
+                    conveyorBox.animate([
+                        { transform: 'scale(1.12, 0.82)' },
+                        { transform: `translateY(-${hit}px) rotate(-${hit}deg) scale(0.95, 1.1)` },
+                        { transform: `rotate(${hit / 2}deg)` },
+                        { transform: 'none' }
+                    ], { duration: 230, easing: 'ease-out' });
+                }
+                return;
+            }
+
+            const item = conveyorItems[nextConveyorItem];
+            nextConveyorItem = (nextConveyorItem + 1) % conveyorItems.length;
+            playSound('crate-open');
+            playConveyorBurst(item);
+            conveyorBox.setAttribute('aria-disabled', 'true');
+            showConveyorItem(item);
+            if (!conveyorReducedMotion.matches) {
+                conveyorCard.animate([
+                    { transform: 'translateY(7px) scale(0.98)', backgroundColor: '#fff2cc', opacity: 0.65 },
+                    { transform: 'none', opacity: 1 }
+                ], { duration: 340, easing: 'ease-out' });
+            }
+            window.setTimeout(() => {
+                conveyorTaps = 0;
+                updateConveyorBox();
+                conveyorBox.removeAttribute('aria-disabled');
+            }, conveyorReducedMotion.matches ? 0 : 480);
+        });
+
+        function showConveyorItem(item) {
+            conveyorLabel.textContent = item.label;
+            conveyorTitle.textContent = item.name;
+            conveyorSummary.textContent = item.summary || '';
+            conveyorSummary.hidden = !item.summary;
+            conveyorBadge.replaceChildren(createConveyorBadge(item));
+
+            const facts = (item.facts || []).map(([label, value]) => {
+                const row = document.createElement('div');
+                const term = document.createElement('dt');
+                const detail = document.createElement('dd');
+                term.textContent = label;
+                detail.textContent = value;
+                row.append(term, detail);
+                return row;
+            });
+            conveyorFacts.replaceChildren(...facts);
+
+            const actions = item.links.map(({ text, href, newTab }) => {
+                const link = document.createElement('a');
+                link.className = 'conveyor-action';
+                link.textContent = text;
+                link.href = href;
+                if (newTab) {
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                }
+                return link;
+            });
+            if (item.project) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'conveyor-action';
+                button.textContent = 'View project';
+                button.addEventListener('click', () => openProjectModal(item.project));
+                actions.push(button);
+            }
+            conveyorActions.replaceChildren(...actions);
         }
 
         const miniCanvas = document.getElementById('canvasMiniMoving');
@@ -1298,7 +1564,6 @@
         let evacAgents = [];
 
         function resizeAllCanvases() {
-            resizeHeroCanvas();
             [miniCanvas, apocCanvas, fireCanvas].forEach(c => {
                 if (!c) return;
                 const r = c.getBoundingClientRect();
@@ -1314,7 +1579,6 @@
         }
 
         function seedSimulationEntities() {
-            spawnHeroBurst(160, 55);
 
             apocEnemies = [];
             const aw = (apocCanvas && apocCanvas.width) || 340;
@@ -1454,35 +1718,6 @@
         }
 
         function animateAllSimulations() {
-            if (heroCtx && heroCanvas && heroCanvas.width > 0) {
-                heroCtx.fillStyle = '#ecebe7';
-                heroCtx.fillRect(0, 0, heroCanvas.width, heroCanvas.height);
-                heroCtx.strokeStyle = 'rgba(0,0,0,0.05)';
-                for (let x = 0; x < heroCanvas.width; x += 20) {
-                    heroCtx.beginPath();
-                    heroCtx.moveTo(x, 0);
-                    heroCtx.lineTo(x, heroCanvas.height);
-                    heroCtx.stroke();
-                }
-                for (let i = heroEntities.length - 1; i >= 0; i--) {
-                    const p = heroEntities[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    if (p.x < 4 || p.x > heroCanvas.width - 4) p.vx *= -1;
-                    if (p.y < 4 || p.y > heroCanvas.height - 4) p.vy *= -1;
-                    p.life -= 0.4;
-                    heroCtx.fillStyle = p.color;
-                    heroCtx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
-                    if (p.life <= 0) heroEntities.splice(i, 1);
-                }
-                if (heroEntities.length < 12 && Math.random() < 0.05) {
-                    spawnHeroBurst(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height);
-                }
-                heroCtx.fillStyle = '#6b6b6b';
-                heroCtx.font = '10px "JetBrains Mono"';
-                heroCtx.fillText(`POOLED ENTITIES: ${heroEntities.length}`, 8, heroCanvas.height - 8);
-            }
-
             if (miniCtx && miniCanvas && miniCanvas.offsetParent !== null && miniCanvas.width > 0) {
                 miniCtx.fillStyle = '#efeeea';
                 miniCtx.fillRect(0, 0, miniCanvas.width, miniCanvas.height);
