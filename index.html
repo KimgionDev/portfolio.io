@@ -283,7 +283,7 @@
                     </div>
 
                     <p class="text-neutral-700 text-sm sm:text-base leading-relaxed max-w-2xl">
-                        I study Software Engineering at Can Tho University and build <span class="text-[#1c1c1c] font-semibold">2D games with Unity and C#</span>. I worked on gameplay and UI for Mini Moving, a team mobile puzzle game, and built Apocalypse Grid, a solo top-down shooter.
+                        I am a 4th-year Software Engineering student at Can Tho University (GPA 3.56), expecting to graduate in 2027. I am passionate about collaborating on 2D indie games and gameplay systems programming. Currently, I am expanding my skill set with .NET, SQL Server, and Japanese (N5), while actively exploring how to integrate Large Language Models (LLMs) into applications, particularly within Unity.
                     </p>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
@@ -349,25 +349,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                             <div class="sm:col-span-5 flex flex-col items-center">
                                 <div class="w-36 h-36 rounded-xl bg-[#efeeea] border-2 border-pixelOrange p-2 relative group cursor-pointer" onclick="triggerAvatarJump()" title="Click Avatar">
-                                    <svg id="pixelAvatarSvg" viewBox="0 0 32 32" class="w-full h-full transition-transform duration-200" shape-rendering="crispEdges">
-                                        <rect x="2" y="2" width="28" height="28" fill="#fafaf8"/>
-                                        <rect x="9" y="5" width="14" height="4" fill="#e2e0da"/>
-                                        <rect x="8" y="7" width="2" height="6" fill="#e2e0da"/>
-                                        <rect x="22" y="7" width="2" height="6" fill="#e2e0da"/>
-                                        <rect x="10" y="9" width="12" height="10" fill="#fbd38d"/>
-                                        <rect x="7" y="6" width="2" height="8" fill="#1c1c1c"/>
-                                        <rect x="23" y="6" width="2" height="8" fill="#1c1c1c"/>
-                                        <rect x="9" y="4" width="14" height="2" fill="#1c1c1c"/>
-                                        <rect x="10" y="12" width="5" height="3" fill="#6b6b6b"/>
-                                        <rect x="17" y="12" width="5" height="3" fill="#6b6b6b"/>
-                                        <rect x="15" y="13" width="2" height="1" fill="#1c1c1c"/>
-                                        <rect x="14" y="16" width="4" height="1" fill="#7c2d12"/>
-                                        <rect x="8" y="19" width="16" height="9" fill="#6b6b6b"/>
-                                        <rect x="11" y="19" width="10" height="9" fill="#4a4a4a"/>
-                                        <rect x="10" y="23" width="12" height="6" fill="#6b6b6b"/>
-                                        <rect x="11" y="24" width="10" height="4" fill="#171717"/>
-                                        <rect x="15" y="25" width="2" height="2" fill="#6b6b6b"/>
-                                    </svg>
+                                    <img id="pixelAvatar" src="avatar.png" alt="Pixel-art portrait of Nguyen Ngoc Duc Phat" class="w-full h-full object-contain transition-transform duration-200">
                                     <div id="avatarFloatingText" class="hidden absolute -top-2 right-2 font-pixel text-[9px] text-pixelAmber bg-bgDark px-1.5 py-0.5 rounded border border-pixelAmber">
                                         HELLO!
                                     </div>
@@ -467,10 +449,10 @@
                             <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-neutral-700">
                                 <div class="font-pixel text-[9px] text-pixelCyan mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
                                 <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
-                                    <li>Built core <span class="text-[#1c1c1c]">Gameplay UI</span> (Time Gauge, Order Result) &amp; reusable dynamic Prefabs.</li>
-                                    <li>Managed <span class="text-[#1c1c1c]">Game State Flow</span> across UI and main puzzle loop.</li>
-                                    <li>Designed modular <span class="text-pixelAmber">ScriptableObject</span> Upgrade System.</li>
-                                    <li>Wrote <span class="text-pixelGreen">Automated Tests</span> for core grid &amp; upgrade logic.</li>
+                                    <li>Built the time gauge and order results UI, with reusable prefabs for job cards and the day summary.</li>
+                                    <li>Connected the UI screens to the main gameplay loop.</li>
+                                    <li>Built a configurable upgrade system using ScriptableObjects.</li>
+                                    <li>Implemented JSON save/load for player progress, gold, and unlocked upgrades.</li>
                                 </ul>
                             </div>
 
@@ -478,7 +460,7 @@
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">C#</span>
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">ScriptableObjects</span>
                                 <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">UI State Machine</span>
-                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">Unit Testing</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded bg-bgPanel border border-borderPixel text-neutral-700">JSON Save/Load</span>
                             </div>
                         </div>
                     </div>
@@ -518,16 +500,16 @@
                             </div>
 
                             <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed">
-                                A Rogue-lite 2D Top-Down Shooter featuring <span class="text-[#1c1c1c] font-medium">procedural dungeon generation (BSP)</span> and fast-paced wave survival combat.
+                                A casual 2D roguelite shooter built in Unity, with procedurally generated dungeons that vary across runs.
                             </p>
 
                             <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-neutral-700">
                                 <div class="font-pixel text-[9px] text-pixelOrange mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
                                 <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
-                                    <li>Procedural dungeons via <span class="text-[#1c1c1c]">BSP (Loop &amp; Queue)</span> + Random Walk &amp; bitmasking walls.</li>
+                                    <li>Generated dungeons with iterative BSP and a queue, then shaped walls with Random Walk and bitmasking.</li>
                                     <li><span class="text-pixelGreen">Object Pooling</span> for bullets and enemies. Enemies stay idle until the player enters their detection range.</li>
-                                    <li>Enemy AI (chasing, obstacle avoidance, wave respawn) &amp; 360° aiming.</li>
-                                    <li>Loot drops, quest items &amp; <span class="text-pixelAmber">ScriptableObject</span> upgrade dashboard.</li>
+                                    <li>Implemented enemy chasing, obstacle avoidance, wave respawns, and 360&deg; aiming and shooting.</li>
+                                    <li>Built loot drops, quest items that unlock the next level, and a ScriptableObject-based upgrade dashboard.</li>
                                 </ul>
                             </div>
 
@@ -577,19 +559,19 @@
 
                         <div class="p-5 space-y-4">
                             <div>
-                                <div class="text-xs font-mono text-pixelAmber mb-1">Team Leader &amp; Utility AI Designer</div>
-                                <h3 class="font-pixel text-base text-[#1c1c1c] tracking-wide">FIRE EVAC SIM</h3>
+                                <div class="text-xs font-mono text-pixelAmber mb-1">Team Leader &amp; Designer</div>
+                                <h3 class="font-pixel text-base text-[#1c1c1c] tracking-wide">FIRE EVACUATION SIMULATION</h3>
                             </div>
 
                             <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed">
-                                An Agent-Based Modeling (ABM) emergency evacuation simulation powered by multi-agent <span class="text-[#1c1c1c] font-medium">Utility AI decision matrices</span> and navigation graphs.
+                                An agent-based simulation of emergency evacuation during a fire, built on the GAMA Platform.
                             </p>
 
                             <div class="bg-bgDark/80 border border-borderPixel rounded-lg p-3 space-y-1.5 text-xs text-neutral-700">
                                 <div class="font-pixel text-[9px] text-pixelPurple mb-1">DEV PROCESS &amp; ARCHITECTURE:</div>
                                 <ul class="space-y-1 list-disc list-inside text-[11px] leading-relaxed">
-                                    <li>Led 3-person team: authored SDD, 5-week roadmap &amp; <span class="text-[#1c1c1c]">Utility AI Matrix</span> (scoring, penalties, tie-breaking).</li>
-                                    <li>Constructed <span class="text-[#1c1c1c]">50x50 office map</span> &amp; obstacle-avoiding navigation graph in GAML.</li>
+                                    <li>Led a three-person team, wrote the design document and five-week plan, and designed Utility AI for evacuees, firefighters, and rescuers.</li>
+                                    <li>Built a 50 &times; 50 office map in GAML and a navigation graph that lets agents move around walls and obstacles.</li>
                                     <li>Built real-time simulation tracking charts for escaped evacuees, casualties &amp; panic levels.</li>
                                 </ul>
                             </div>
@@ -685,20 +667,7 @@
                     
                     <div class="lg:col-span-4 flex flex-col items-center text-center space-y-3">
                         <div class="w-44 h-44 rounded-full bg-bgDark border-4 border-pixelOrange/80 p-4 flex items-center justify-center shadow-lg relative">
-                            <svg viewBox="0 0 32 32" class="w-32 h-32" shape-rendering="crispEdges">
-                                <rect x="9" y="4" width="14" height="4" fill="#e2e0da"/>
-                                <rect x="10" y="8" width="12" height="10" fill="#fbd38d"/>
-                                <rect x="7" y="5" width="2" height="8" fill="#6b6b6b"/>
-                                <rect x="23" y="5" width="2" height="8" fill="#6b6b6b"/>
-                                <rect x="10" y="11" width="5" height="3" fill="#1c1c1c"/>
-                                <rect x="17" y="11" width="5" height="3" fill="#1c1c1c"/>
-                                <rect x="14" y="15" width="4" height="1" fill="#7c2d12"/>
-                                <rect x="7" y="18" width="18" height="10" fill="#1c1c1c"/>
-                                <rect x="10" y="18" width="12" height="10" fill="#e2e0da"/>
-                                <rect x="13" y="21" width="6" height="4" fill="#57534e"/>
-                                <rect x="14" y="22" width="1" height="2" fill="#f5f4f1"/>
-                                <rect x="17" y="22" width="1" height="1" fill="#f5f4f1"/>
-                            </svg>
+                            <img src="avatar.png" alt="Pixel-art portrait of Nguyen Ngoc Duc Phat" class="w-full h-full object-contain">
                             <span class="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-pixelGreen text-bgDark font-pixel text-[9px]">
                                 GPA 3.56
                             </span>
@@ -834,7 +803,7 @@
                 <h2 class="font-pixel text-xl sm:text-2xl text-[#1c1c1c]">EXPERIENCE</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+            <div class="grid grid-cols-1 gap-x-6 gap-y-12 pt-6 md:grid-cols-3 md:gap-y-6">
                 <div class="pixel-box rounded-2xl p-5 pt-10 relative text-center flex flex-col justify-between">
                     <div class="w-16 h-16 rounded-full bg-bgDark border-2 border-pixelAmber flex items-center justify-center font-pixel text-[10px] text-[#1c1c1c] mx-auto -mt-16 mb-3 shadow-lg">
                         SOLO
@@ -863,7 +832,7 @@
                         </h3>
                         <p class="text-xs text-neutral-600">Sep 2026 - Present</p>
                         <p class="text-xs text-neutral-700 leading-relaxed">
-                            Developing UI State Flow, ScriptableObject upgrades &amp; Unit Tests for <span class="text-[#1c1c1c]">Mini Moving</span> (Team of 3), while leading Utility AI design for <span class="text-[#1c1c1c]">Fire Evacuation Sim</span>.
+                            Built gameplay UI, configurable upgrades, and JSON save/load for <span class="text-[#1c1c1c]">Mini Moving</span>. Led the team and designed Utility AI for <span class="text-[#1c1c1c]">Fire Evacuation Simulation</span>.
                         </p>
                     </div>
                     <div class="mt-4 pt-2 border-t border-borderPixel text-[11px] text-pixelOrange font-mono">
@@ -1098,18 +1067,18 @@
         let badgeTimeout = null;
         function triggerAvatarJump() {
             playSound('powerup');
-            const svg = document.getElementById('pixelAvatarSvg');
+            const avatar = document.getElementById('pixelAvatar');
             const badge = document.getElementById('avatarFloatingText');
-            if (!svg || !badge) return;
+            if (!avatar || !badge) return;
 
             if (jumpTimeout) clearTimeout(jumpTimeout);
             if (badgeTimeout) clearTimeout(badgeTimeout);
 
-            svg.classList.add('-translate-y-3', 'scale-105');
+            avatar.classList.add('-translate-y-3', 'scale-105');
             badge.classList.remove('hidden');
 
             jumpTimeout = setTimeout(() => {
-                svg.classList.remove('-translate-y-3', 'scale-105');
+                avatar.classList.remove('-translate-y-3', 'scale-105');
             }, 220);
             badgeTimeout = setTimeout(() => {
                 badge.classList.add('hidden');
@@ -1163,13 +1132,13 @@
                         <span class="px-2.5 py-1 rounded bg-pixelOrange/20 text-pixelOrange font-semibold">Role: Gameplay & UI Developer</span>
                         <span class="px-2.5 py-1 rounded bg-bgDark border border-borderPixel text-neutral-700">Sep 2026 – Present</span>
                     </div>
-                    <p><strong>Game Concept:</strong> A 2D bin-packing puzzle game where players arrange irregularly shaped cargo into a truck's grid under a strict "Time-Budget Economy" system.</p>
+                    <p>In this 2D mobile puzzle game, players fit cargo into a truck grid while managing a time budget.</p>
                     <div class="p-4 rounded-xl bg-bgDark border border-borderPixel space-y-2">
                         <div class="font-pixel text-xs text-pixelAmber">KEY SYSTEMS IMPLEMENTED BY PHAT:</div>
                         <ul class="list-disc list-inside space-y-1.5">
-                            <li><strong>UI State Flow & Dynamic Prefabs:</strong> Engineered the state transitions connecting the Order Selection screen, active Bin-Packing HUD (Time Gauge, Cargo Queue), and Order Result / Day Summary screens.</li>
-                            <li><strong>ScriptableObject Upgrade Architecture:</strong> Decoupled upgrade stats (truck grid capacity, time-budget bonuses, cargo value multipliers) into modular <code>ScriptableObject</code> assets so game designers can tweak balancing without touching code.</li>
-                            <li><strong>Automated Testing:</strong> Wrote NUnit tests in Unity Test Runner to verify cargo placement collision bounds and upgrade cost formulas.</li>
+                            <li><strong>Gameplay UI:</strong> Built the time gauge and order results UI, created reusable prefabs for job cards and the day summary, and integrated the screens into the gameplay loop.</li>
+                            <li><strong>Upgrade System:</strong> Used modular ScriptableObject assets so player progression can be tuned through configuration.</li>
+                            <li><strong>Save/Load:</strong> Implemented JSON persistence for player progress, gold, and unlocked upgrades.</li>
                         </ul>
                     </div>
                 `
@@ -1181,13 +1150,14 @@
                         <span class="px-2.5 py-1 rounded bg-pixelOrange/20 text-pixelOrange font-semibold">Solo Developer</span>
                         <span class="px-2.5 py-1 rounded bg-bgDark border border-borderPixel text-neutral-700">May 2026 – Aug 2026</span>
                     </div>
-                    <p><strong>Game Concept:</strong> A fast-paced 2D Rogue-lite Top-Down Shooter featuring procedural dungeon rooms and wave survival combat.</p>
+                    <p>A casual 2D roguelite shooter built in Unity. Players explore procedurally generated dungeons and find quest items that unlock the next level.</p>
                     <div class="p-4 rounded-xl bg-bgDark border border-borderPixel space-y-2">
                         <div class="font-pixel text-xs text-pixelCyan">TECHNICAL BREAKDOWN:</div>
                         <ul class="list-disc list-inside space-y-1.5">
-                            <li><strong>Iterative BSP Dungeon Generation:</strong> Partitioned 2D space using an explicit <code>Queue&lt;BoundsInt&gt;</code> loop instead of recursion to avoid stack overhead, followed by Random Walk organic room carving and 4-bit/8-bit wall bitmasking for automatic tile placement.</li>
+                            <li><strong>Dungeon Generation:</strong> Used a loop and queue for BSP, with Random Walk and wall bitmasking.</li>
                             <li><strong>Object Pooling:</strong> Reused bullet and enemy objects. Enemies stay idle until the player enters their detection range.</li>
-                            <li><strong>Enemy AI & 360° Combat:</strong> Implemented obstacle-avoidance steering, wave respawn scaling, and ScriptableObject-driven player upgrades (HP, Damage, Speed, Ammo).</li>
+                            <li><strong>Combat:</strong> Implemented enemy chasing, obstacle avoidance, wave respawns, and 360&deg; aiming and shooting.</li>
+                            <li><strong>Gameplay Loop:</strong> Built loot drops and quest items that unlock the next level, plus a ScriptableObject-based dashboard for health, damage, speed, and ammo upgrades.</li>
                         </ul>
                     </div>
                     <div class="flex flex-wrap gap-3 pt-2">
@@ -1204,17 +1174,18 @@
                 title: 'FIRE EVACUATION SIM — UTILITY AI & ABM PATHFINDING',
                 content: `
                     <div class="flex flex-wrap gap-2 text-xs">
-                        <span class="px-2.5 py-1 rounded bg-pixelPurple/20 text-pixelPurple font-semibold">Team Leader & AI Designer (Team of 3)</span>
+                        <span class="px-2.5 py-1 rounded bg-pixelPurple/20 text-pixelPurple font-semibold">Team Leader &amp; Designer (Team of 3)</span>
                         <span class="px-2.5 py-1 rounded bg-pixelCyan/20 text-pixelCyan font-semibold">Utility AI Matrix</span>
                         <span class="px-2.5 py-1 rounded bg-bgDark border border-borderPixel text-neutral-700">Sep 2026 – Present</span>
                     </div>
-                    <p><strong>Project Overview:</strong> An Agent-Based Modeling (ABM) simulation of emergency office evacuation during a spreading fire incident on the GAMA Platform.</p>
+                    <p>An agent-based simulation of emergency evacuation during a fire, built on the GAMA Platform.</p>
                     <div class="p-4 rounded-xl bg-bgDark border border-borderPixel space-y-2">
                         <div class="font-pixel text-xs text-pixelAmber">LEADERSHIP & AI ARCHITECTURE:</div>
                         <ul class="list-disc list-inside space-y-1.5">
-                            <li><strong>Utility AI Decision Matrix:</strong> Designed multi-factor utility scoring (action scoring, hazard penalties, priority bonuses, and tie-breaking rules) governing autonomous behaviors for Evacuees, Firefighters, and Rescuers.</li>
-                            <li><strong>Spatial Navigation Graph:</strong> Built a 50x50 office environment in GAML with dynamic obstacle-avoiding pathfinding around smoke and fire zones.</li>
-                            <li><strong>Real-Time Analytics:</strong> Engineered live simulation tracking charts for escaped evacuees, casualties, and crowd panic propagation.</li>
+                            <li><strong>Team Leadership:</strong> Led a three-person team and wrote the design document and five-week plan.</li>
+                            <li><strong>Utility AI:</strong> Designed action scoring, penalties, priority bonuses, and tie-breaking for evacuees, firefighters, and rescuers.</li>
+                            <li><strong>Navigation:</strong> Built a 50 &times; 50 office map in GAML and a navigation graph that lets agents move around walls and obstacles.</li>
+                            <li><strong>Charts:</strong> Built real-time charts for escaped evacuees, casualties, and panic levels.</li>
                         </ul>
                     </div>
                     <div class="flex flex-wrap gap-3 pt-2">
