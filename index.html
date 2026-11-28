@@ -744,51 +744,35 @@
             </div>
 
             <div class="pixel-box rounded-3xl p-6 sm:p-10 bg-bgPanel">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    
-                    <div class="lg:col-span-4 flex flex-col items-center text-center space-y-3">
-                        <div class="w-44 h-44 rounded-full bg-bgDark border-4 border-pixelOrange/80 p-4 flex items-center justify-center shadow-lg relative">
-                            <img src="avatar.png" alt="Pixel-art portrait of Nguyen Ngoc Duc Phat" class="w-full h-full object-contain">
-                            <span class="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-pixelGreen text-bgDark font-pixel text-[9px]">
-                                GPA 3.56
-                            </span>
-                        </div>
-                        <div>
-                            <h3 class="font-pixel text-sm text-[#1c1c1c]">KimgionDev</h3>
-                            <p class="text-xs text-pixelCyan font-mono mt-1">Can Tho University (2023 – 2027)</p>
-                        </div>
-                    </div>
+                <div class="space-y-4">
+                    <h3 class="font-pixel text-base sm:text-lg text-pixelAmber">
+                        &gt; SOFTWARE ENGINEERING STUDENT SEEKING A UNITY GAME DEVELOPMENT INTERNSHIP
+                    </h3>
+                    <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                        I am a fourth-year <span class="text-[#1c1c1c] font-semibold">Software Engineering student at Can Tho University</span> and expect to graduate in 2027.
+                    </p>
+                    <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                        I am looking for a game development internship where I can learn from the team and help build and test gameplay prototypes.
+                    </p>
 
-                    <div class="lg:col-span-8 space-y-4">
-                        <h3 class="font-pixel text-base sm:text-lg text-pixelAmber">
-                            &gt; SOFTWARE ENGINEERING STUDENT SEEKING A UNITY GAME DEVELOPMENT INTERNSHIP
-                        </h3>
-                        <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                            I am a fourth-year <span class="text-[#1c1c1c] font-semibold">Software Engineering student at Can Tho University</span> and expect to graduate in 2027.
-                        </p>
-                        <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                            I am looking for a game development internship where I can learn from the team and help build and test gameplay prototypes.
-                        </p>
-
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
-                                <div class="font-pixel text-xs text-pixelOrange">3.56/4.0</div>
-                                <div class="text-[11px] text-neutral-600 mt-1">Academic GPA</div>
-                            </div>
-                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
-                                <div class="font-pixel text-xs text-pixelAmber">TEAM &amp; SOLO</div>
-                                <div class="text-[11px] text-neutral-600 mt-1">Git PR + CodeRabbit</div>
-                            </div>
-                            <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
-                                <div class="font-pixel text-xs text-pixelGreen">EN / JP</div>
-                                <div class="text-[11px] text-neutral-600 mt-1">Basic EN • N5 Learner</div>
-                            </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                        <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                            <div class="font-pixel text-xs text-pixelOrange">3.56/4.0</div>
+                            <div class="text-[11px] text-neutral-600 mt-1">Academic GPA</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                            <div class="font-pixel text-xs text-pixelAmber">TEAM &amp; SOLO</div>
+                            <div class="text-[11px] text-neutral-600 mt-1">Git PR + CodeRabbit</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-bgDark border border-borderPixel">
+                            <div class="font-pixel text-xs text-pixelGreen">EN / JP</div>
+                            <div class="text-[11px] text-neutral-600 mt-1">Basic EN • N5 Learner</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-8 pt-6 border-t border-borderPixel">
-                    <div class="flex items-center justify-between mb-4">
+                    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-4">
                         <span class="font-pixel text-xs text-neutral-700 flex items-center gap-2">
                             <i class="fa-solid fa-chart-simple text-pixelCyan"></i>
                             GITHUB REPOSITORIES &amp; ACTIVITY (@KimgionDev)
@@ -797,7 +781,7 @@
                             github.com/KimgionDev &rarr;
                         </a>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                         <img src="https://github-readme-stats.shion.dev/api?username=KimgionDev&theme=vision-friendly-dark&hide_border=false&include_all_commits=true&count_private=true" 
                              alt="KimgionDev GitHub Stats" 
                              class="w-full h-auto rounded-lg border border-borderPixel bg-bgDark p-1"
@@ -1079,17 +1063,17 @@
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
                     osc.start(now);
                     osc.stop(now + 0.12);
-                } else if (type === 'crate-tap' || type === 'crate-crack' || type === 'crate-open') {
-                    const opening = type === 'crate-open';
-                    const frequency = opening ? 230 : type === 'crate-crack' ? 340 : 210;
-                    const duration = opening ? 0.24 : 0.09;
-                    osc.type = opening ? 'triangle' : 'square';
-                    osc.frequency.setValueAtTime(frequency, now);
-                    osc.frequency.exponentialRampToValueAtTime(opening ? 760 : 85, now + duration * 0.55);
-                    gain.gain.setValueAtTime(opening ? 0.16 : 0.055, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-                    osc.start(now);
-                    osc.stop(now + duration);
+                } else if (type === 'crate-tap') {
+                    playCrateTone(osc, gain, now, 'triangle', 260, 95, 0.14, 0.13);
+                } else if (type === 'crate-crack') {
+                    playCrateTone(osc, gain, now, 'sawtooth', 680, 140, 0.13, 0.08);
+                    addCrateTone(now + 0.045, 'triangle', 310, 90, 0.16, 0.12);
+                } else if (type === 'crate-open') {
+                    playCrateTone(osc, gain, now, 'triangle', 170, 62, 0.34, 0.23);
+                    addCrateTone(now, 'sawtooth', 920, 200, 0.12, 0.09);
+                    addCrateTone(now + 0.085, 'triangle', 523, 523, 0.15, 0.21);
+                    addCrateTone(now + 0.15, 'triangle', 659, 659, 0.14, 0.22);
+                    addCrateTone(now + 0.215, 'triangle', 784, 784, 0.16, 0.26);
                 } else if (type === 'powerup') {
                     osc.type = 'square';
                     osc.frequency.setValueAtTime(330, now);
@@ -1102,6 +1086,29 @@
                 }
             } catch (e) {
             }
+        }
+
+        function playCrateTone(osc, gain, start, wave, from, to, volume, duration) {
+            osc.type = wave;
+            osc.frequency.setValueAtTime(from, start);
+            osc.frequency.exponentialRampToValueAtTime(to, start + duration * 0.65);
+            gain.gain.setValueAtTime(0.001, start);
+            gain.gain.linearRampToValueAtTime(volume, start + 0.005);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
+            osc.start(start);
+            osc.stop(start + duration);
+            osc.onended = () => {
+                osc.disconnect();
+                gain.disconnect();
+            };
+        }
+
+        function addCrateTone(start, wave, from, to, volume, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            playCrateTone(osc, gain, start, wave, from, to, volume, duration);
         }
 
         function toggleSFX() {
