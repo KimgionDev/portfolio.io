@@ -1023,7 +1023,9 @@
         function unlockAudio() {
             initAudio();
             if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume().catch(() => {});
+                audioCtx.resume().then(playCrateArrival).catch(() => {});
+            } else {
+                playCrateArrival();
             }
             window.removeEventListener('pointerdown', unlockAudio);
             window.removeEventListener('keydown', unlockAudio);
@@ -1063,6 +1065,9 @@
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
                     osc.start(now);
                     osc.stop(now + 0.12);
+                } else if (type === 'crate-arrival') {
+                    playCrateTone(osc, gain, now, 'triangle', 520, 390, 0.21, 0.12);
+                    addCrateTone(now + 0.065, 'triangle', 780, 680, 0.16, 0.16);
                 } else if (type === 'crate-tap') {
                     playCrateTone(osc, gain, now, 'triangle', 260, 95, 0.14, 0.13);
                 } else if (type === 'crate-crack') {
@@ -1407,6 +1412,24 @@
         ];
         const conveyorReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let nextConveyorItem = 0;
+        let lastCrateArrival = -Infinity;
+
+        function playCrateArrival() {
+            if (!sfxEnabled || audioCtx?.state !== 'running' || document.hidden ||
+                conveyorBox.getAttribute('aria-disabled') === 'true') return;
+
+            const rect = conveyor.getBoundingClientRect();
+            const now = performance.now();
+            if (!rect.height || rect.bottom <= 0 || rect.top >= window.innerHeight ||
+                now - lastCrateArrival < 350) return;
+
+            lastCrateArrival = now;
+            playSound('crate-arrival');
+        }
+
+        conveyorBox.parentElement.addEventListener('animationiteration', event => {
+            if (event.animationName === 'box-travel') playCrateArrival();
+        });
         let conveyorTaps = 0;
 
         function createConveyorBadge(item) {
@@ -1504,6 +1527,7 @@
                 conveyorTaps = 0;
                 updateConveyorBox();
                 conveyorBox.removeAttribute('aria-disabled');
+                playCrateArrival();
             }, conveyorReducedMotion.matches ? 0 : 480);
         });
 
